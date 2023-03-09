@@ -4,6 +4,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.forms import ModelChoiceField
 
+from .models import Form
 from django.contrib.auth.models import Group,User
 
 
