@@ -1,0 +1,95 @@
+{% load crispy_forms_tags %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Заявки</title>
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0-alpha1/css/bootstrap.min.css"
+          integrity="sha512-72OVeAaPeV8n3BdZj7hOkaPSEk/uwpDkaGyP4W2jSzAC8tfiO4LMEDWoL3uFp5mcZu+8Eehb4GhZWFwvrss69Q=="
+          crossorigin="anonymous"
+          referrerpolicy="no-referrer"/>
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.3/font/bootstrap-icons.min.css"
+          integrity="sha512-YFENbnqHbCRmJt5d+9lHimyEMt8LKSNTMLSaHjvsclnZGICeY/0KYEeiHwD1Ux4Tcao0h60tdcMv+0GljvWyHg=="
+          crossorigin="anonymous"
+          referrerpolicy="no-referrer"/>
+  </head>
+  <body>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0-alpha1/js/bootstrap.bundle.min.js" integrity="sha512-Sct/LCTfkoqr7upmX9VZKEzXuRk5YulFoDTunGapYJdlCwA+Rl4RhgcPCLf7awTNLmIVrszTPNUFu4MSesep5Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <div class="container mt-3">
+      <nav class="nav nav-pills nav-justified mb-4">
+        <a class="nav-link active"><span class="badge bg-danger me-1 ">{{ data|length }}</span>Заявки</a>
+        <a class="nav-link" href="{% url 'tasks' %}"><span class="badge bg-danger me-1">{{ tasks }}</span>Поручения</a>
+      </nav>
+      <div class="container mb-3">
+        <div class="row px-3">
+          <div class="hstack gap-1">
+            <div class="col-auto text-start me-3">Время отправки заявки</div>
+            <div class="col-4">Тема</div>
+            <div class="col">Состояние</div>
+            <div class="col">Исполнитель</div>
+            <div class="col text">Выполнить до</div>
+            <div class="col text-end">Действия</div>
+          </div>
+        </div>
+      </div>
+      {% block content %}
+        {% for part in data %}
+          <div id="post{{ part.pk }}"
+               class="mb-3 vstack gap-5 rounded-3 p-4 my-3 shadow border
+                      {% if part.priority == "3" %}
+                        border-danger
+                      {% elif part.priority == "2" %}
+                        border-warning
+                      {% endif %} ">
+            <div class="hstack gap-1">
+              <div class="col-auto me-3 text-muted">{{ part.time }}</div>
+              <div class="col-4 fw-bold">{{ part.theme|truncatechars:30 }}</div>
+              {% if part.actual is True or part.state == "Завершено" %}
+                <div class="col text-state">{{ part.state }}</div>
+              {% else %}
+                <div class="col text-state">Просрочено</div>
+              {% endif %}
+              <div class="col">
+                {{ part.implementer.first_name }} {{ part.implementer.last_name }}
+              </div>
+              <div class="col">{{ part.deadline }}</div>
+              <div class="col text-end">
+                {% if part.implementer is None %}
+                  <form method="post" action="{% url 'takereq' part.pk %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-outline-primary">
+                      <i class="bi bi-arrow-right"></i>
+                    </button>
+                  </form>
+                {% elif part.implementer == request.user %}
+                  <form method="post" action="{% url 'delreq' part.pk %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-primary">
+                      <i class="bi bi-check2"></i>
+                    </button>
+                  </form>
+                {% elif request.user not in part.soimplementor.all %}
+                  <form method="post" action="{% url 'joinreq' part.pk %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-outline-success">
+                      <i class="bi bi-person-plus-fill"></i>
+                    </button>
+                  </form>
+                {% endif %}
+              </div>
+            </div>
+            {{ part.requesting_message }}
+          </div>
+        {% endfor %}
+      {% endblock %}
+    </div>
+    <script async src="{% static 'js/helpers.js' %}"></script>
+    <script defer src="{% static 'js/colorized.js' %}"></script>
+  </body>
+</html>

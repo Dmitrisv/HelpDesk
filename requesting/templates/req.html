@@ -1,0 +1,102 @@
+{% load crispy_forms_tags %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HelpDesk</title>
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0-alpha1/css/bootstrap.min.css"
+          integrity="sha512-72OVeAaPeV8n3BdZj7hOkaPSEk/uwpDkaGyP4W2jSzAC8tfiO4LMEDWoL3uFp5mcZu+8Eehb4GhZWFwvrss69Q=="
+          crossorigin="anonymous"
+          referrerpolicy="no-referrer"/>
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.3/font/bootstrap-icons.min.css"
+          integrity="sha512-YFENbnqHbCRmJt5d+9lHimyEMt8LKSNTMLSaHjvsclnZGICeY/0KYEeiHwD1Ux4Tcao0h60tdcMv+0GljvWyHg=="
+          crossorigin="anonymous"
+          referrerpolicy="no-referrer"/>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0-alpha1/js/bootstrap.bundle.min.js" integrity="sha512-Sct/LCTfkoqr7upmX9VZKEzXuRk5YulFoDTunGapYJdlCwA+Rl4RhgcPCLf7awTNLmIVrszTPNUFu4MSesep5Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script defer type="application/javascript" src="{% static 'js/colorized.js' %}"></script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <h2>
+            <i class="bi bi-pc"></i>HelpDesk
+          </h2>
+          <div class="fs-3 user_hello" id="{{ user.username }}">
+            Добро пожаловать {{ user.first_name }}!
+          </div>
+        </div>
+        <div class="col">
+          <div class="text-end mt-3">
+            Bug reports, support:
+          <a href="mailto:sushchikovdv@kipmaster.ru" class="link-dark">sushchikovdv@kipmaster.ru</a
+          >
+          <a href="/logout">Выйти</a>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col mt-3">
+        {% block content %}
+          <form action="{% url 'new' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %} {{ form|crispy }}
+            <div class="text-end">
+              <button type="submit" class="btn btn-primary px-5 btn-lg">Отправить</button>
+            </div>
+          </form>
+        {% endblock %}
+      </div>
+    </div>
+    <h3 class="mb-5">Ваши заявки</h3>
+    {% if data|length > 0 %}
+      <div class="container mb-3">
+        <div class="row px-3">
+          <div class="hstack gap-1">
+            <div class="col-3">Время отправки заявки</div>
+            <div class="col">Тема</div>
+            <div class="col">Состояние</div>
+            <div class="col">Исполнитель</div>
+            <div class="col text-end">Выполнить до</div>
+          </div>
+        </div>
+      </div>
+      <div class="req">
+        {% for dat in data %}
+          <div class="container">
+            <div class="vstack gap-5 rounded-3 p-4 my-3 shadow border
+                        {% if dat.priority == "3" %}
+                          border-danger
+                        {% elif dat.priority == "2" %}
+                          border-warning
+                        {% elif dat.priority == "1" %}
+                          border-success
+                        {% endif %}">
+              <div class="hstack gap-1">
+                <div class="col-3 text-muted">{{ dat.time }}</div>
+                <div class="col fw-bold">{{ dat.theme|truncatechars:20 }}</div>
+                {% if dat.actual is True or dat.state == "Завершено" %}
+                  <div class="col text-state">{{ dat.state }}</div>
+                {% else %}
+                  <div class="col text-state">Просрочено</div>
+                {% endif %}
+                <div class="col">
+                  {{ dat.implementer.first_name }} {{ dat.implementer.last_name }}
+                </div>
+                <div class="col text-end">{{ dat.deadline }}</div>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      {% else %}
+        У вас пока что нет заявок
+      {% endif %}
+    </div>
+  </div>
+</body>
+</html>

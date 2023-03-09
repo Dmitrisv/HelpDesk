@@ -1,0 +1,45 @@
+{% load crispy_forms_tags %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Регистрация</title>
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0-alpha1/css/bootstrap.min.css"
+          integrity="sha512-72OVeAaPeV8n3BdZj7hOkaPSEk/uwpDkaGyP4W2jSzAC8tfiO4LMEDWoL3uFp5mcZu+8Eehb4GhZWFwvrss69Q=="
+          crossorigin="anonymous"
+          referrerpolicy="no-referrer"/>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0-alpha1/js/bootstrap.bundle.min.js" integrity="sha512-Sct/LCTfkoqr7upmX9VZKEzXuRk5YulFoDTunGapYJdlCwA+Rl4RhgcPCLf7awTNLmIVrszTPNUFu4MSesep5Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  </head>
+  <body>
+    <div class="container">
+      {% block content %}
+        <div class="row gx-3">
+          <div class="col p-5 ">
+            <img src=" {% static 'requesting/log.jpg' %} "
+                 class="img-fluid h-100 rounded shadow rounded mt-3"
+                 alt=""/>
+          </div>
+          <div class="col mt-5 shadow rounded-5  px-5">
+            <h2 class="text-center mt-3 ">Регистрация</h2>
+            <form method="post">
+              {% csrf_token %} {{ form|crispy }}
+              <div>
+                Уже есть учетная запись? <a href="/login/">Войти</a>
+              </div>
+              <div class="text-end">
+                <button type="submit" class="btn btn-outline-primary px-5 btn-lg mt-3 mb-3">
+                  Зарегестрироваться
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      {% endblock %}
+    </div>
+  </body>
+</html>

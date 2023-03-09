@@ -1,0 +1,25 @@
+services:
+  django:
+    build: 
+      context: .
+      dockerfile: ./Dockerfile
+    depends_on:
+      - postgres
+    ports:
+      - "80:80"
+    networks:
+      - postgres
+    restart: unless-stopped
+    command: ["bash","./start.sh"]
+
+  postgres:
+    image: postgres:15
+    env_file:
+      - ./.env
+    networks:
+      - postgres
+    restart: unless-stopped
+
+
+networks:
+  postgres:

@@ -1,0 +1,9 @@
+django 
+channels
+crispy_bootstrap5
+uvicorn[standard]
+django-environ
+psycopg2-binary
+whitenoise
+gunicorn
+django-jazzmin
