@@ -38,14 +38,6 @@ class Users(BaseUserAdmin):
         queryset.update(is_active=True)
 
 
-@admin.register(models.Task)
-class Tasks(admin.ModelAdmin):
-    list_display = ("user","theme")
-    list_filter = ("user",)
-
-    
-
-
 @admin.register(models.Form)
 class Requests(admin.ModelAdmin):
     list_filter = ("active", "user", "state", "implementer","time" )

@@ -6,7 +6,7 @@ from django.views.decorators.http import require_POST
 from django.http import HttpResponse
 
 from . import models
-from .forms import AddrequestForm, RegisterForm, TaskForm
+from .forms import AddrequestForm, RegisterForm
 from django.contrib.auth.models import Group
 
 
@@ -27,14 +27,13 @@ def new_request(request):
 
 @staff_member_required
 def get_all_requests(request):
-    count_taks = models.Task.objects.filter(user=request.user.id,active=True).count()
     data = (
         models.Form.objects.filter(active=True)
         .order_by("-priority","time")
         .select_related("implementer", "user")
         .prefetch_related("soimplementor")
     )
-    return render(request, "watchdog.html", {"data": data,"tasks":count_taks})
+    return render(request, "watchdog.html", {"data": data})
 
 
 def sign_up(request):
@@ -53,29 +52,7 @@ def sign_up(request):
     return render(request, "registration/sign_up.html", {"form": form})
 
 
-@staff_member_required
-def tasks(request):
-    form = TaskForm()
-    tasks = models.Task.objects.filter(user = request.user, active = True).order_by('-id')
-    count_requests = models.Form.objects.filter(active = True).count()
-    if request.method == "POST":
-        form = TaskForm(request.POST)
-        if form.is_valid:
-            task = form.save(commit=False)
-            task.save()
-            form = TaskForm
-    return render(request,"tasks.html",{"form":form,"tasks":tasks,"requests":count_requests})
 
-@require_POST
-@staff_member_required
-def taskdone(request,id):
-    task = models.Task.objects.get(pk=id)
-    if task.user == request.user:
-        task.active = False
-        task.save()
-        return HttpResponse(200)
-    else:
-        return HttpResponse(403)
 
 
 @require_POST

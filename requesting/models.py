@@ -13,22 +13,6 @@ PRIORITY = (
     ('3', "Срочно"),
 )
 
-class Task(models.Model):
-    
-    user = models.ForeignKey(
-        User, on_delete=models.CASCADE, verbose_name="Имя пользователя"
-    )
-    theme = models.CharField(max_length=50, verbose_name="Тема поручения")
-    active = models.BooleanField(default=True)
-
-    def __str__(self):
-        return self.theme
-
-    class Meta:
-        verbose_name = "Поручение"
-        verbose_name_plural = "Поручения"
-        permissions = (("can_give_tasks","Может получать задания"),) 
-
 
 class Form(models.Model):
     user = models.ForeignKey(
