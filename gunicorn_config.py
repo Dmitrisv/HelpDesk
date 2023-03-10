@@ -4,7 +4,7 @@ from __future__ import annotations
 import multiprocessing
 
 # pylint: disable=invalid-name
-bind = "0.0.0.0:80"
+bind = "0.0.0.0:8000"
 workers = 1
 
 # https://adamj.eu/tech/2019/09/19/working-around-memory-leaks-in-your-django-app/

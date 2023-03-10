@@ -2,7 +2,7 @@ FROM python:3-slim as python
 
 WORKDIR /app
 
-EXPOSE 80
+EXPOSE 8000
 
 
 COPY ./requirements.txt .
