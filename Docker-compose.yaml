@@ -5,10 +5,10 @@ services:
       dockerfile: ./Dockerfile
     depends_on:
       - postgres
-    ports:
-      - "80:80"
-    networks:
-      - postgres
+    expose:
+      - 8000
+    volumes:
+      - static_data:/app/staticfiles
     restart: unless-stopped
     command: ["bash","./start.sh"]
 
@@ -16,10 +16,17 @@ services:
     image: postgres:15
     env_file:
       - ./.env
-    networks:
-      - postgres
     restart: unless-stopped
 
+  nginx:
+    image: nginx:latest
+    depends_on:
+      - django
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx-conf.d:/etc/nginx/conf.d
+      - static_data:/var/www/static
 
-networks:
-  postgres:
+volumes:
+  static_data:
