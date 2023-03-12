@@ -34,6 +34,7 @@ class Form(models.Model):
     state = models.CharField(
         max_length=20, default="Ожидает", verbose_name="Состояние"
     )
+    done_at = models.DateTimeField(verbose_name="Когда выполненно",null=True)
     deadline = models.DateField(
         verbose_name="Выполнить до", validators=[validators.validate_deadline]
     )
