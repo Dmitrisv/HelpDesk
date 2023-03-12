@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
 from django.views.decorators.http import require_POST
 from django.http import HttpResponse
+from datetime import datetime
 
 from . import models
 from .forms import AddrequestForm, RegisterForm, TaskForm
@@ -95,6 +96,7 @@ def complitedreq(request, id):
     req = models.Form.objects.get(pk=id)
     req.active = False
     req.state = "Завершено"
+    req.done_at = datetime.now().date()
     req.save()
     return redirect("requests")
 
