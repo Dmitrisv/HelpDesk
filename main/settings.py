@@ -18,14 +18,15 @@ USE_TZ = True
 env.read_env(str(BASE_DIR / ".env"))
 
 
-# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-# EMAIL_HOST = env.str("EMAIL_HOST")
-# EMAIL_HOST_PASSWORD = env.str("EMAIL_HOST_PASSWORD")
-# EMAIL_HOST_USER = env.str("EMAIL_HOST_USER")
-# EMAIL_PORT = env.int("EMAIL_PORT")
-# EMAIL_USE_TLS = env.bool("EMAIL_USE_TLS")
-# EMAIL_USE_SSL = env.bool("EMAIL_USE_SSL")
-
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = env.str("EMAIL_HOST")
+EMAIL_HOST_PASSWORD = env.str("EMAIL_HOST_PASSWORD")
+EMAIL_HOST_USER = env.str("EMAIL_HOST_USER")
+EMAIL_PORT = env.int("EMAIL_PORT")
+EMAIL_USE_TLS = env.bool("EMAIL_USE_TLS")
+EMAIL_USE_SSL = env.bool("EMAIL_USE_SSL")
+DEFAULT_FROM_EMAIL = env.str("DEFAULT_FROM_EMAIL")
+EMAIL_SUBJECT_PREFIX = '[HelpDesk]'
 
 
 DATABASES = {
@@ -64,6 +65,7 @@ STATIC_ROOT = BASE_DIR / "staticfiles"
 
 INSTALLED_APPS = [
     'jazzmin',
+    "requesting",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -73,7 +75,6 @@ INSTALLED_APPS = [
     "channels",
     "crispy_bootstrap5",
     "crispy_forms",
-    "requesting",
     "dashboard",
 ]
 
@@ -101,7 +102,6 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "whitenoise.middleware.WhiteNoiseMiddleware",
 ]
 
 STATIC_URL = "static/"
@@ -155,3 +155,4 @@ LOGGING = {
 CHANNEL_LAYERS = {
     "default": {"BACKEND": "channels.layers.InMemoryChannelLayer"}
 }
+
