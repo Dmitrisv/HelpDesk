@@ -18,6 +18,7 @@
           integrity="sha512-YFENbnqHbCRmJt5d+9lHimyEMt8LKSNTMLSaHjvsclnZGICeY/0KYEeiHwD1Ux4Tcao0h60tdcMv+0GljvWyHg=="
           crossorigin="anonymous"
           referrerpolicy="no-referrer"/>
+    <link rel="stylesheet" href="{% static 'css/custom-elements.css' %}">
   </head>
   <body>
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0-alpha1/js/bootstrap.bundle.min.js" integrity="sha512-Sct/LCTfkoqr7upmX9VZKEzXuRk5YulFoDTunGapYJdlCwA+Rl4RhgcPCLf7awTNLmIVrszTPNUFu4MSesep5Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -26,70 +27,34 @@
         <a class="nav-link active"><span class="badge bg-danger me-1 ">{{ data|length }}</span>Заявки</a>
         <a class="nav-link" href="{% url 'tasks' %}"><span class="badge bg-danger me-1">{{ tasks }}</span>Поручения</a>
       </nav>
-      <div class="container mb-3">
-        <div class="row px-3">
-          <div class="hstack gap-1">
-            <div class="col-auto text-start me-3">Время отправки заявки</div>
-            <div class="col-4">Тема</div>
-            <div class="col">Состояние</div>
-            <div class="col">Исполнитель</div>
-            <div class="col text">Выполнить до</div>
-            <div class="col text-end">Действия</div>
-          </div>
-        </div>
-      </div>
-      {% block content %}
-        {% for part in data %}
-          <div id="post{{ part.pk }}"
-               class="mb-3 vstack gap-5 rounded-3 p-4 my-3 shadow border
-                      {% if part.priority == "3" %}
-                        border-danger
-                      {% elif part.priority == "2" %}
-                        border-warning
-                      {% endif %} ">
-            <div class="hstack gap-1">
-              <div class="col-auto me-3 text-muted">{{ part.time }}</div>
-              <div class="col-4 fw-bold">{{ part.theme|truncatechars:30 }}</div>
-              {% if part.actual is True or part.state == "Завершено" %}
-                <div class="col text-state">{{ part.state }}</div>
-              {% else %}
-                <div class="col text-state">Просрочено</div>
-              {% endif %}
-              <div class="col">
-                {{ part.implementer.first_name }} {{ part.implementer.last_name }}
-              </div>
-              <div class="col">{{ part.deadline }}</div>
-              <div class="col text-end">
-                {% if part.implementer is None %}
-                  <form method="post" action="{% url 'takereq' part.pk %}">
-                    {% csrf_token %}
-                    <button type="submit" class="btn btn-outline-primary">
-                      <i class="bi bi-arrow-right"></i>
-                    </button>
-                  </form>
-                {% elif part.implementer == request.user %}
-                  <form method="post" action="{% url 'delreq' part.pk %}">
-                    {% csrf_token %}
-                    <button type="submit" class="btn btn-primary">
-                      <i class="bi bi-check2"></i>
-                    </button>
-                  </form>
-                {% elif request.user not in part.soimplementor.all %}
-                  <form method="post" action="{% url 'joinreq' part.pk %}">
-                    {% csrf_token %}
-                    <button type="submit" class="btn btn-outline-success">
-                      <i class="bi bi-person-plus-fill"></i>
-                    </button>
-                  </form>
+      <div class="container g-0">
+        {% for form in data %}
+          <a href="{% url 'request_info' form.id %}" class="text-decoration-none">
+            <div class="card-flush shadow p-3 rounded mb-3
+                        {% if form.actual is False %}
+                          border border-danger
+                        {% endif %}">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col">
+                    <h5 class="card-title text-dark">{{ form.theme }}</h5>
+                  </div>
+                  <div class="col text-end text-dark">{{ form.time }}</div>
+                </div>
+                <p class="card-text text-muted py-3">{{ form.requesting_message }}</p>
+                {% if form.priority == "1" %}
+                  <span class="badge rounded-pill text-bg-custom-low  py-2 fs-6">Нейтрально</span>
+                {% elif form.priority == "2" %}
+                  <span class="badge rounded-pill text-bg-custom-medium py-2 fs-6">Средний</span>
+                {% elif form.priority == "3" %}
+                  <span class="badge rounded-pill text-bg-custom-urgent py-2 fs-6 ">Важно</span>
                 {% endif %}
               </div>
             </div>
-            {{ part.requesting_message }}
-          </div>
+          </a>
         {% endfor %}
-      {% endblock %}
+      </div>
     </div>
     <script async src="{% static 'js/helpers.js' %}"></script>
-    <script defer src="{% static 'js/colorized.js' %}"></script>
   </body>
 </html>

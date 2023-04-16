@@ -4,6 +4,8 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
 from django.views.decorators.http import require_POST
 from django.http import HttpResponse
+from django.shortcuts import get_object_or_404
+from django.http import Http404, HttpResponseForbidden
 from datetime import datetime
 
 from . import models
@@ -28,14 +30,15 @@ def new_request(request):
 
 @staff_member_required
 def get_all_requests(request):
-    count_taks = models.Task.objects.filter(user=request.user.id,active=True).count()
+    count_taks = models.Task.objects.filter(
+        user=request.user.id, active=True).count()
     data = (
         models.Form.objects.filter(active=True)
-        .order_by("-priority","time")
+        .order_by("-priority", "time")
         .select_related("implementer", "user")
         .prefetch_related("soimplementor")
     )
-    return render(request, "watchdog.html", {"data": data,"tasks":count_taks})
+    return render(request, "watchdog.html", {"data": data, "tasks": count_taks})
 
 
 def sign_up(request):
@@ -45,7 +48,7 @@ def sign_up(request):
         form = RegisterForm(request.POST)
         if form.is_valid():
             user = form.save()
-            group = Group.objects.get(name = form.cleaned_data['groups'])
+            group = Group.objects.get(name=form.cleaned_data['groups'])
             user.groups.add(group)
             login(request, user)
             return redirect("new")
@@ -57,19 +60,21 @@ def sign_up(request):
 @staff_member_required
 def tasks(request):
     form = TaskForm()
-    tasks = models.Task.objects.filter(user = request.user, active = True).order_by('-id')
-    count_requests = models.Form.objects.filter(active = True).count()
+    tasks = models.Task.objects.filter(
+        user=request.user, active=True).order_by('-id')
+    count_requests = models.Form.objects.filter(active=True).count()
     if request.method == "POST":
         form = TaskForm(request.POST)
         if form.is_valid:
             task = form.save(commit=False)
             task.save()
             form = TaskForm
-    return render(request,"tasks.html",{"form":form,"tasks":tasks,"requests":count_requests})
+    return render(request, "tasks.html", {"form": form, "tasks": tasks, "requests": count_requests})
+
 
 @require_POST
 @staff_member_required
-def taskdone(request,id):
+def taskdone(request, id):
     task = models.Task.objects.get(pk=id)
     if task.user == request.user:
         task.active = False
@@ -108,3 +113,15 @@ def sub_implementor(request, id):
     if req.active == True:
         req.soimplementor.add(request.user)
     return redirect("requests")
+
+
+@login_required
+def req_info(request, id):
+    try:
+        req = get_object_or_404(models.Form, pk=id)
+        if request.user == req.user or request.user.is_staff == True:
+            return render(request, "req_info.html", {"requests": req})
+        else:
+            raise HttpResponseForbidden
+    except models.Form.DoesNotExist:
+        raise Http404("404")

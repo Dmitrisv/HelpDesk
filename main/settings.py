@@ -6,7 +6,7 @@ BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 env = environ.Env()
 env.smart_cast = False
 
-DEBUG = False
+DEBUG = True
 SECRET_KEY = (
     "django-insecure-n=e%k)a(l_=vqwxdyx5f#oc87addn7r-$q)!8amx2eswkrgx18"
 )
@@ -49,6 +49,10 @@ DATABASES = {
 #     }
 # }
 
+
+AUTH_USER_MODEL = 'requesting.CustomUser'
+
+
 JAZZMIN_SETTINGS = {
     "site_title": "Админ панель",
     "site_brand": "Админ панель",
@@ -77,8 +81,6 @@ INSTALLED_APPS = [
     "crispy_forms",
     "dashboard",
 ]
-
-
 
 
 LOGIN_REDIRECT_URL = "new"
@@ -155,4 +157,3 @@ LOGGING = {
 CHANNEL_LAYERS = {
     "default": {"BACKEND": "channels.layers.InMemoryChannelLayer"}
 }
-

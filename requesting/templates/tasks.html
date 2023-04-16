@@ -3,45 +3,45 @@
 
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Поручения</title>
-        <link rel="stylesheet"
-              href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0-alpha1/css/bootstrap.min.css"
-              integrity="sha512-72OVeAaPeV8n3BdZj7hOkaPSEk/uwpDkaGyP4W2jSzAC8tfiO4LMEDWoL3uFp5mcZu+8Eehb4GhZWFwvrss69Q=="
-              crossorigin="anonymous"
-              referrerpolicy="no-referrer"/>
-    </head>
-    <body>
-        {% csrf_token %}
-        <div class="container mt-3">
-            <nav class="nav nav-pills nav-justified ">
-                <a class="nav-link " href="{% url 'requests' %} "><span class="badge bg-danger me-1 ">{{ requests }}</span>Заявки</a>
-                <a class="nav-link active"><span class="badge bg-danger me-1 task">{{ tasks|length }}</span>Поручения</a>
-            </nav>
-            {% if tasks|length > 0 %}
-                {% for task in tasks %}
-                    <div class="vstack gap-5 rounded-3 p-4 my-3 shadow border">
-                        <div class="row">
-                            <div class="col col-auto">
-                                <input type="checkbox" class="tasks_jobs" name="" id="{{ task.id }}">
-                            </div>
-                            <p class="col text-start fw-bold p-0 mb-0">{{ task.theme }}</p>
-                        </div>
-                    </div>
-                {% endfor %}
-            {% endif %}
-            {% if perms.requestings.can_give_tasks %}
-                <div class="container">
-                    <form method="post">
-                        {% csrf_token %}
-                        {{ form|crispy }}
-                        <input class="btn btn-primary" type="submit" value="Поручить">
-                    </form>
-                </div>
-            {% endif %}
-            <script async src="{% static 'js/task.js' %}"></script>
-        </body>
-    </html>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Поручения</title>
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0-alpha1/css/bootstrap.min.css"
+          integrity="sha512-72OVeAaPeV8n3BdZj7hOkaPSEk/uwpDkaGyP4W2jSzAC8tfiO4LMEDWoL3uFp5mcZu+8Eehb4GhZWFwvrss69Q=="
+          crossorigin="anonymous"
+          referrerpolicy="no-referrer"/>
+  </head>
+  <body>
+    {% csrf_token %}
+    <div class="container mt-3">
+      <nav class="nav nav-pills nav-justified ">
+        <a class="nav-link " href="{% url 'requests' %} "><span class="badge bg-danger me-1 ">{{ requests }}</span>Заявки</a>
+        <a class="nav-link active"><span class="badge bg-danger me-1 task">{{ tasks|length }}</span>Поручения</a>
+      </nav>
+      {% if tasks|length > 0 %}
+        {% for task in tasks %}
+          <div class="vstack gap-5 rounded-3 p-4 my-3 shadow border">
+            <div class="row">
+              <div class="col col-auto">
+                <input type="checkbox" class="tasks_jobs" name="" id="{{ task.id }}">
+              </div>
+              <p class="col text-start fw-bold p-0 mb-0">{{ task.theme }}</p>
+            </div>
+          </div>
+        {% endfor %}
+      {% endif %}
+      {% if perms.requestings.can_give_tasks %}
+        <div class="container">
+          <form method="post">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <input class="btn btn-primary" type="submit" value="Поручить">
+          </form>
+        </div>
+      {% endif %}
+      <script async src="{% static 'js/task.js' %}"></script>
+    </body>
+  </html>

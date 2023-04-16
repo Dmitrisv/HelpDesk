@@ -1,12 +1,10 @@
 from django.contrib import admin
-from django.contrib.auth.models import User
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from . import models
 
-admin.site.unregister(User)
 
 
-@admin.register(User)
+@admin.register(models.CustomUser)
 class Users(BaseUserAdmin):
     list_display = (
         "username",

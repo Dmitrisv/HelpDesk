@@ -12,3 +12,5 @@ __pycache__/
 *$py.class
 .venv
 .env
+migrations/*
+.vscode/
