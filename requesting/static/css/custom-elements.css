@@ -1,0 +1,12 @@
+.text-bg-custom-medium {
+    color: rgb(0,84,215)!important;
+    background-color: rgb(228,244,254)
+}
+.text-bg-custom-urgent {
+    color: rgb(235,1,72)!important;
+    background-color: rgb(255,217,229)
+}
+.text-bg-custom-low {
+    color: rgb(8,135,43)!important;
+    background-color: rgb(227,252,231)
+}
