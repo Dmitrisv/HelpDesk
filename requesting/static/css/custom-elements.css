@@ -2,6 +2,11 @@
     color: rgb(0,84,215)!important;
     background-color: rgb(228,244,254)
 }
+.text-bg-custom-info {
+    background-color: rgb(247, 248, 254);
+    color: black;
+    
+}
 .text-bg-custom-urgent {
     color: rgb(235,1,72)!important;
     background-color: rgb(255,217,229)

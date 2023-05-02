@@ -7,6 +7,7 @@ from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
 from django.http import Http404, HttpResponseForbidden
 from datetime import datetime
+from django.utils import timezone
 
 from . import models
 from .forms import AddrequestForm, RegisterForm, TaskForm
@@ -101,7 +102,8 @@ def complitedreq(request, id):
     req = models.Form.objects.get(pk=id)
     req.active = False
     req.state = "Завершено"
-    req.done_at = datetime.now().date()
+    req.done_at = timezone.make_aware(
+        datetime.now(), timezone.get_default_timezone())
     req.save()
     return redirect("requests")
 
