@@ -8,6 +8,7 @@ from django.shortcuts import get_object_or_404
 from django.http import Http404, HttpResponseForbidden
 from datetime import datetime
 from django.utils import timezone
+from uuid import uuid4
 
 from . import models
 from .forms import AddrequestForm, RegisterForm, TaskForm
@@ -18,7 +19,8 @@ from django.contrib.auth.models import Group
 def new_request(request):
     data = models.Form.objects.filter(user=request.user).order_by("-time")[:5]
     if request.method == "POST":
-        form = AddrequestForm(request.POST)
+        form = AddrequestForm(request.POST, request.FILES)
+        request.FILES['image'].name = f"{uuid4()}.png"
         if form.is_valid():
             post = form.save(commit=False)
             post.user = request.user

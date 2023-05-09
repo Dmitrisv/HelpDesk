@@ -6,7 +6,7 @@ BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 env = environ.Env()
 env.smart_cast = False
 
-DEBUG = True
+DEBUG = False
 SECRET_KEY = (
     "django-insecure-n=e%k)a(l_=vqwxdyx5f#oc87addn7r-$q)!8amx2eswkrgx18"
 )
@@ -80,6 +80,7 @@ INSTALLED_APPS = [
     "crispy_bootstrap5",
     "crispy_forms",
     "dashboard",
+    "imagekit",
 ]
 
 
@@ -95,7 +96,6 @@ AUTH_PASSWORD_VALIDATORS = [
     {"NAME": f"{_PASS}.NumericPasswordValidator"},
     # {"NAME": "requesting.password_validation.PasswordValidator"},
 ]
-STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
@@ -107,6 +107,8 @@ MIDDLEWARE = [
 ]
 
 STATIC_URL = "static/"
+MEDIA_ROOT = BASE_DIR / "media"
+MEDIA_URL = "media/"
 # STATICFILES_DIRS = [BASE_DIR / "static"]
 ALLOWED_HOSTS = ["*"]
 TEMPLATES = [

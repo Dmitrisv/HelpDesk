@@ -11,6 +11,7 @@ services:
       - 8000
     volumes:
       - static_data:/app/staticfiles
+      - media:/app/media
     restart: unless-stopped
     command: ["bash","./start.sh"]
 
@@ -23,6 +24,7 @@ services:
       test: ["CMD", "pg_isready", "-U", "postgres"]
       interval: 10s
       timeout: 5s
+      start_period: 1s
       retries: 5
 
   nginx:
@@ -34,6 +36,8 @@ services:
     volumes:
       - ./nginx-conf.d:/etc/nginx/conf.d
       - static_data:/var/www/static
+      - media:/var/www/media
 
 volumes:
   static_data:
+  media:

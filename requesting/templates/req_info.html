@@ -1,5 +1,4 @@
 {% load static %}
-
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -17,6 +16,11 @@
               integrity="sha512-YFENbnqHbCRmJt5d+9lHimyEMt8LKSNTMLSaHjvsclnZGICeY/0KYEeiHwD1Ux4Tcao0h60tdcMv+0GljvWyHg=="
               crossorigin="anonymous"
               referrerpolicy="no-referrer"/>
+        <link rel="stylesheet"
+              href="https://cdnjs.cloudflare.com/ajax/libs/viewerjs/1.11.3/viewer.css"
+              integrity="sha512-0IJ01kDH6fR7Oo1QEcyF+PgSLpefYXuGICVfNNoOseW6+HmsoaHzSZ7BAnwuu6BoK+nSn9WOeh0kiNjPNtGpuw=="
+              crossorigin="anonymous"
+              referrerpolicy="no-referrer"/>
         <link rel="stylesheet" href="{% static 'css/custom-elements.css' %}">
     </head>
     <body>
@@ -29,21 +33,12 @@
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item">
-                        <a href="{% if request.user.is_staff is True %}
-                                     {% url 'requests' %}
-                                 {% else %}
-                                     {% url 'new' %}
-                                 {% endif %}">Заявки</a>
+                        <a href="{% if request.user.is_staff is True %} {% url 'requests' %} {% else %} {% url 'new' %} {% endif %}">Заявки</a>
                     </li>
-                    <li class="breadcrumb-item active" aria-current="page">
-                        Заявка № {{ requests.id }}
-                    </li>
+                    <li class="breadcrumb-item active" aria-current="page">Заявка № {{ requests.id }}</li>
                 </ol>
             </nav>
-            <div class="card-flush shadow p-3  rounded mb-3
-                        {% if requests.actual is False %}
-                            border border-danger
-                        {% endif %}">
+            <div class="card-flush shadow p-3  rounded mb-3 {% if requests.actual is False %} border border-danger{% endif %}">
                 <div class="card-body">
                     <div class="overflow-x-auto d-flex">
                         <span class="badge fs-6 me-1 rounded-pill text-bg-custom-medium"><i class="bi bi-person-circle"></i> {{ requests.user.first_name }} {{ requests.user.last_name }}</span>
@@ -52,7 +47,12 @@
                     </div>
                     <h5 class="card-title text-dark mt-3">{{ requests.theme }}</h5>
                     <p class="card-text text-muted ">{{ requests.requesting_message }}</p>
-                    <div class="row">
+                    {% if requests.image != "" %}
+                        <div class="img-fluid">
+                            <img src="{{ requests.image_thumbnail.url }}" id="image" class="rounded border border-primary" alt="" name = {{ requests.image }}>
+                        </div>
+                    {% endif %}
+                    <div class="row mt-3">
                         <div class="col">
                             {% if requests.priority == "1" %}
                                 <span class="badge rounded-pill text-bg-custom-low py-2 fs-6 ">Нейтрально</span>
@@ -97,5 +97,8 @@
             </div>
         </div>
     </div>
+</div>
+<script defer type="application/javascript" src="{% static 'js/view.js' %}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/viewerjs/1.11.3/viewer.min.js" integrity="sha512-f8kZwYACKF8unHuRV7j/5ILZfflRncxHp1f6y/PKuuRpCVgpORNZMne1jrghNzTVlXabUXIg1iJ5PvhuAaau6Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </body>
 </html>

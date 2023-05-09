@@ -24,8 +24,8 @@ class TaskForm(forms.ModelForm):
 class AddrequestForm(forms.ModelForm):
     class Meta:
         model = Form
-        fields = ["theme", "requesting_message", "location", "deadline","priority"]
-        widgets = {"deadline": forms.DateInput({"type": "date",})}
+        fields = ["theme", "requesting_message", "image", "location", "deadline","priority"]
+        widgets = {"deadline": forms.DateInput({"type": "date",})}  
 
 
 class RegisterForm(UserCreationForm):

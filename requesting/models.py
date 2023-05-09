@@ -7,6 +7,8 @@ from django.core.validators import MinValueValidator
 from django.db import models
 from django.contrib.auth.models import AbstractUser, PermissionsMixin
 from . import validators
+from imagekit.models import ImageSpecField
+from imagekit.processors import ResizeToFill
 
 
 PRIORITY = (
@@ -60,7 +62,12 @@ class Form(models.Model):
     state = models.CharField(
         max_length=20, default="Ожидает", verbose_name="Состояние"
     )
-    done_at = models.DateTimeField(verbose_name="Когда выполненно",null=True)
+    done_at = models.DateTimeField(verbose_name="Когда выполненно",blank=True,null=True)
+    image = models.ImageField(_("Вложение"),blank=True)
+    image_thumbnail = ImageSpecField(source='image',
+                                      processors=[ResizeToFill(64, 64)],
+                                      format='JPEG',
+                                      options={'quality': 60})
     deadline = models.DateField(
         verbose_name="Выполнить до", validators=[validators.validate_deadline]
     )

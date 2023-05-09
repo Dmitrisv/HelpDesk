@@ -1,4 +1,4 @@
-django 
+django
 channels
 crispy_bootstrap5
 uvicorn[standard]
@@ -8,3 +8,5 @@ whitenoise
 gunicorn
 django-jazzmin
 plotly
+Pillow
+django-imagekit
