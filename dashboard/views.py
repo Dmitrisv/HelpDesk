@@ -2,7 +2,8 @@ from django.shortcuts import render
 from django.db.models import Q
 from django.contrib.auth.decorators import user_passes_test
 
-from requesting.models import User, Form
+from requesting.models import Form
+from requesting.models import CustomUser as User
 from datetime import date
 
 import plotly.graph_objs as go
