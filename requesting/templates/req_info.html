@@ -1,4 +1,6 @@
 {% load static %}
+{% load crispy_forms_tags %}
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -94,11 +96,29 @@
                         <div class="div"></div>
                     {% endif %}
                 </div>
+
+            </div>
+            {% for chat_message in requests.messages.all %}
+            <div class="card-body">
+                <h5 class="card-title text-dark mt-3">{{ chat_message.user }}</h5>
+                <p class="card-text text-muted ">{{ chat_message.message }}</p>
+                {% if chat_message.image != "" %}
+                    <div class="img-fluid">
+                        <img src="{{ chat_message.image_thumbnail.url }}" id="image" class="rounded border border-primary" alt="" name = {{ chat_message.image }}>
+                    </div>
+                {% endif %}
+            </div>
+            {% endfor %}
+                {{ form|crispy }}
+              <div class="text-end">
+                <button class="btn btn-primary send" onclick="sendMessage()">Отправить</button>
             </div>
         </div>
     </div>
 </div>
-<script defer type="application/javascript" src="{% static 'js/view.js' %}"></script>
+<script defer type="text/javascript" src="{% static 'js/view.js' %}"></script>
+<script defer type="text/javascript" src="{% static 'js/paste.js' %}"></script>
+<script defer type="text/javascript" src="{% static 'js/chat.js' %}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/viewerjs/1.11.3/viewer.min.js" integrity="sha512-f8kZwYACKF8unHuRV7j/5ILZfflRncxHp1f6y/PKuuRpCVgpORNZMne1jrghNzTVlXabUXIg1iJ5PvhuAaau6Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </body>
 </html>

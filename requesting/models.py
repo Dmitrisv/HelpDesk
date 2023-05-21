@@ -1,7 +1,5 @@
 from datetime import date
 
-from django.contrib.auth.models import User
-from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 from django.core.validators import MinValueValidator
 from django.db import models
@@ -26,7 +24,6 @@ class CustomUser(AbstractUser, PermissionsMixin):
 
 
 class Task(models.Model):
-    
     user = models.ForeignKey(
         CustomUser, on_delete=models.CASCADE, verbose_name="Имя пользователя"
     )
@@ -40,6 +37,22 @@ class Task(models.Model):
         verbose_name = "Поручение"
         verbose_name_plural = "Поручения"
         permissions = (("can_give_tasks","Может получать задания"),) 
+
+class FormMessage(models.Model):
+    user = models.ForeignKey(
+        CustomUser, on_delete=models.CASCADE, verbose_name="Имя пользователя", 
+    )
+    message = models.TextField(_("Сообщение"), max_length=200)
+    image = models.ImageField(_("Вложение"), null = True, blank = True,)
+    image_thumbnail = ImageSpecField(source='image',
+                                      processors=[ResizeToFill(64, 64)],
+                                      format='JPEG',
+                                      options={'quality': 60})
+    class Meta:
+        verbose_name_plural = "Сообщения"
+
+    def __str__(self):
+        return self.message
 
 
 class Form(models.Model):
@@ -63,7 +76,7 @@ class Form(models.Model):
         max_length=20, default="Ожидает", verbose_name="Состояние"
     )
     done_at = models.DateTimeField(verbose_name="Когда выполненно",blank=True,null=True)
-    image = models.ImageField(_("Вложение"),blank=True)
+    image = models.ImageField(_("Вложение"),blank=True,null=True)
     image_thumbnail = ImageSpecField(source='image',
                                       processors=[ResizeToFill(64, 64)],
                                       format='JPEG',
@@ -83,6 +96,7 @@ class Form(models.Model):
     soimplementor = models.ManyToManyField(
         CustomUser, related_name="subimplemetor", verbose_name="Соисполнитель",blank=True
     )
+    messages = models.ManyToManyField(FormMessage, verbose_name=_("Сообщения"),blank=True, null = True)
 
     def __str__(self):
         return self.theme

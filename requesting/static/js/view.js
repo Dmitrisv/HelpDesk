@@ -1,9 +1,10 @@
 window.addEventListener('DOMContentLoaded', ()=> {
-  let thumbnail_image = document.querySelector("img")
-      image.addEventListener('click', function () {
+  let thumbnail_image = document.querySelectorAll("#image")
+    thumbnail_image.forEach(e => {
+      e.addEventListener('click', function () {
         var image = new Image();
 
-        image.src = '../media/'+ thumbnail_image.getAttribute("name");
+        image.src = '../media/'+ e.getAttribute("name");
 
         var viewer = new Viewer(image, {
           hidden: function () {
@@ -17,4 +18,5 @@ window.addEventListener('DOMContentLoaded', ()=> {
 
         viewer.show();
       });
+    });
     });

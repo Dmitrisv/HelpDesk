@@ -4,7 +4,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.forms import ModelChoiceField
 
-from .models import Form, Task, CustomUser
+from .models import Form, Task, CustomUser, FormMessage
 from django.contrib.auth.models import Group,User
 
 class TaskForm(forms.ModelForm):
@@ -26,6 +26,11 @@ class AddrequestForm(forms.ModelForm):
         model = Form
         fields = ["theme", "requesting_message", "image", "location", "deadline","priority"]
         widgets = {"deadline": forms.DateInput({"type": "date",})}  
+
+class MessageForm(forms.ModelForm):
+    class Meta:
+        model = FormMessage
+        fields = ['message',"image"]
 
 
 class RegisterForm(UserCreationForm):

@@ -41,7 +41,10 @@ class Tasks(admin.ModelAdmin):
     list_display = ("user","theme")
     list_filter = ("user",)
 
-    
+   
+@admin.register(models.FormMessage)
+class FormMessage(admin.ModelAdmin):
+    list_display = ("user","message","image")
 
 
 @admin.register(models.Form)
