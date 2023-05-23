@@ -40,6 +40,7 @@
                     <li class="breadcrumb-item active" aria-current="page">Заявка № {{ requests.id }}</li>
                 </ol>
             </nav>
+            <div class="chat-container">
             <div class="card-flush shadow p-3  rounded mb-3 {% if requests.actual is False %} border border-danger{% endif %}">
                 <div class="card-body">
                     <div class="overflow-x-auto d-flex">
@@ -51,7 +52,7 @@
                     <p class="card-text text-muted ">{{ requests.requesting_message }}</p>
                     {% if requests.image != "" %}
                         <div class="img-fluid">
-                            <img src="{{ requests.image_thumbnail.url }}" id="image" class="rounded border border-primary" alt="" name = {{ requests.image }}>
+                            <img src="{{ requests.image_thumbnail.url }}" id="image" class="rounded border border-primary" alt="" name = {{ requests.image.url }}>
                         </div>
                     {% endif %}
                     <div class="row mt-3">
@@ -100,15 +101,16 @@
             </div>
             {% for chat_message in requests.messages.all %}
             <div class="card-body">
-                <h5 class="card-title text-dark mt-3">{{ chat_message.user }}</h5>
+                <h5 class="card-title text-dark mt-3">{{ chat_message.user.first_name }} {{chat_message.user.last_name}}</h5>
                 <p class="card-text text-muted ">{{ chat_message.message }}</p>
                 {% if chat_message.image != "" %}
                     <div class="img-fluid">
-                        <img src="{{ chat_message.image_thumbnail.url }}" id="image" class="rounded border border-primary" alt="" name = {{ chat_message.image }}>
+                        <img src="{{ chat_message.image_thumbnail.url }}" id="image" class="rounded border border-primary" alt="" name = {{ chat_message.image.url }}>
                     </div>
                 {% endif %}
             </div>
             {% endfor %}
+        </div>
                 {{ form|crispy }}
               <div class="text-end">
                 <button class="btn btn-primary send" onclick="sendMessage()">Отправить</button>
