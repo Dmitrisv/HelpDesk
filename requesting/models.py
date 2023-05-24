@@ -72,6 +72,7 @@ class Form(models.Model):
     location = models.IntegerField(
         verbose_name="Кабинет", validators=[MinValueValidator(1)]
     )
+    created_at = models.DateField(verbose_name="Дата создания",auto_now_add=True,blank=True,null=True,editable=False)
     state = models.CharField(
         max_length=20, default="Ожидает", verbose_name="Состояние"
     )

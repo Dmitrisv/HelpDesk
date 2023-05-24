@@ -7,6 +7,7 @@ import base64
 import uuid
 from django.conf import settings
 import os
+from django.utils.html import escape
 
 consumers = []
 
@@ -82,7 +83,7 @@ class ChatConsumer(AsyncJsonWebsocketConsumer):
             self.room_group_name,
             {
                 'type': 'chat_message',
-                'content': message,
+                'content': escape(message),
                 'image': image_url,
                 'image_src': image_url_src,
                 'username': (f'{username.first_name} {username.last_name}'),
@@ -96,7 +97,7 @@ class ChatConsumer(AsyncJsonWebsocketConsumer):
         username = event.get('username')
         await self.send_json({
             'type_event': 'new_chat_message',
-            'content': content,
+            'content': escape(content),
             'image': image,
             'image_src': image_url_src,
             'username': username,

@@ -9,11 +9,34 @@ from django.http import Http404, HttpResponseForbidden
 from datetime import datetime
 from django.utils import timezone
 from uuid import uuid4
+from django.shortcuts import render
+import plotly.graph_objects as go
+import plotly.offline as opy
+from datetime import datetime, timedelta
 
 from . import models
 from .forms import AddrequestForm, RegisterForm, TaskForm, MessageForm
 from django.contrib.auth.models import Group
 
+
+def create_plot(user):
+    weekdays = ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье']
+    today = datetime.now().date()
+    week_ago = today - timedelta(days=7)
+    data = {day: 0 for day in weekdays}
+    forms = models.Form.objects.filter(user=user, created_at__gte=week_ago, created_at__lte=today)
+    for form in forms:
+        created_day = form.created_at.weekday()
+        data[weekdays[created_day]] += 1
+    days = list(data.keys())
+    counts = list(data.values())
+    fig = go.Figure(data=go.Bar(x=days, y=counts))
+    fig.update_layout(
+        xaxis_title='День недели',
+        yaxis_title='Количество заявок',
+    )
+    div = opy.plot(fig, auto_open=False, output_type='div')
+    return div
 
 @login_required
 def new_request(request):
@@ -111,6 +134,11 @@ def complitedreq(request, id):
     req.save()
     return redirect("requests")
 
+@login_required
+def profile(request):
+    fig = create_plot(request.user)
+    data = models.Form.objects.filter(user=request.user).order_by("-time")[:5]
+    return render(request, "profile.html", {"reqs": data, "plot":fig})
 
 @require_POST
 @staff_member_required
