@@ -1,6 +1,8 @@
+from typing import Any, Optional
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
+from django.db import models
 from django.shortcuts import redirect, render
 from django.views.decorators.http import require_POST
 from django.http import HttpResponse
@@ -13,11 +15,12 @@ from django.shortcuts import render
 import plotly.graph_objects as go
 import plotly.offline as opy
 from datetime import datetime, timedelta
+from django.views.generic import ListView, UpdateView
+from django.http import HttpResponseRedirect
 
 from . import models
-from .forms import AddrequestForm, RegisterForm, TaskForm, MessageForm
+from .forms import AddrequestForm, RegisterForm, TaskForm, MessageForm,CustomUser
 from django.contrib.auth.models import Group
-
 
 def create_plot(user):
     weekdays = ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье']
@@ -84,6 +87,16 @@ def sign_up(request):
         form = RegisterForm()
     return render(request, "registration/sign_up.html", {"form": form})
 
+class HistoryListView(ListView):
+    model = models.Form
+    template_name="history.html"
+    context_object_name='forms'
+    paginate_by = 50
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        queryset = queryset.filter(user=self.request.user).order_by('-time')
+        return queryset
+
 
 @staff_member_required
 def tasks(request):
@@ -148,6 +161,22 @@ def sub_implementor(request, id):
         req.soimplementor.add(request.user)
     return redirect("requests")
 
+
+class PublicProfileView(UpdateView):
+    model = CustomUser
+    fields = ["first_name","last_name","phone","ip"] 
+    template_name = "profile_settings.html"
+
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        self.object.user = self.request.user
+        self.object.save()
+        return HttpResponseRedirect("profile")
+
+
+    def get_object(self,):
+        return CustomUser.objects.get(pk=self.request.user.pk)
+    
 
 @login_required
 def req_info(request, id):

@@ -1,6 +1,5 @@
 {% load crispy_forms_tags %}
 {% load static %}
-
 <!DOCTYPE html>
 <html lang="ru">
   <head>
@@ -26,9 +25,7 @@
           <h2>
             <i class="bi bi-pc"></i>HelpDesk
           </h2>
-          <div class="fs-3 user_hello" id="{{ user.username }}">
-            Добро пожаловать {{ user.first_name }}!
-          </div>
+          <div class="fs-3 user_hello" id="{{ user.username }}">Добро пожаловать {{ user.first_name }}!</div>
         </div>
         <div class="col">
           <div class="text-end mt-3">
@@ -52,9 +49,7 @@
       </div>
     </div>
     <h3 class="mb-5">Ваши заявки</h3>
-    
   </div>
-
   <script defer src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0-alpha1/js/bootstrap.bundle.min.js" integrity="sha512-Sct/LCTfkoqr7upmX9VZKEzXuRk5YulFoDTunGapYJdlCwA+Rl4RhgcPCLf7awTNLmIVrszTPNUFu4MSesep5Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script defer type="application/javascript" src="{% static 'js/colorized.js' %}"></script>
   <script defer type="application/javascript" src="{% static 'js/paste.js' %}"></script>

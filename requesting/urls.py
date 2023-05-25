@@ -2,6 +2,7 @@ from django.urls import path
 from django.contrib.auth import views as auth_views
 
 from . import views
+from .views import HistoryListView,PublicProfileView
 
 urlpatterns = [
     path("", views.new_request, name="new"),
@@ -16,4 +17,6 @@ urlpatterns = [
         html_email_template_name='registration/password_reset_email.html')),
     path("request/<int:id>", views.req_info, name="request_info"),
     path("profile/",views.profile,name="profile"),
+    path("settings/profile",PublicProfileView.as_view(),name = "profile_settings"),
+    path("history/",HistoryListView.as_view(),name="history"),
 ]

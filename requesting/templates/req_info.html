@@ -1,6 +1,5 @@
 {% load static %}
 {% load crispy_forms_tags %}
-
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -41,78 +40,77 @@
                 </ol>
             </nav>
             <div class="chat-container">
-            <div class="card-flush shadow p-3  rounded mb-3 {% if requests.actual is False %} border border-danger{% endif %}">
-                <div class="card-body">
-                    <div class="overflow-x-auto d-flex">
-                        <span class="badge fs-6 me-1 rounded-pill text-bg-custom-medium"><i class="bi bi-person-circle"></i> {{ requests.user.first_name }} {{ requests.user.last_name }}</span>
-                        <span class="badge fs-6 me-1 rounded-pill text-bg-custom-medium"><i class="bi bi-buildings"></i> {{ requests.user.groups.first.name }}</span>
-                        <span class="badge fs-6 me-1 rounded-pill text-bg-custom-medium"><i class="bi bi-geo-alt-fill"></i>{{ requests.location }} кабинет</span>
-                    </div>
-                    <h5 class="card-title text-dark mt-3">{{ requests.theme }}</h5>
-                    <p class="card-text text-muted ">{{ requests.requesting_message }}</p>
-                    {% if requests.image != "" %}
-                        <div class="img-fluid">
-                            <img src="{{ requests.image_thumbnail.url }}" id="image" class="rounded border border-primary" alt="" name = {{ requests.image.url }}>
+                <div class="card-flush shadow p-3  rounded mb-3 {% if requests.actual is False %} border border-danger{% endif %}">
+                    <div class="card-body">
+                        <div class="overflow-x-auto d-flex">
+                            <span class="badge fs-6 me-1 rounded-pill text-bg-custom-medium"><i class="bi bi-person-circle"></i> {{ requests.user.first_name }} {{ requests.user.last_name }}</span>
+                            <span class="badge fs-6 me-1 rounded-pill text-bg-custom-medium"><i class="bi bi-buildings"></i> {{ requests.user.groups.first.name }}</span>
+                            <span class="badge fs-6 me-1 rounded-pill text-bg-custom-medium"><i class="bi bi-geo-alt-fill"></i>{{ requests.location }} кабинет</span>
                         </div>
-                    {% endif %}
-                    <div class="row mt-3">
-                        <div class="col">
-                            {% if requests.priority == "1" %}
-                                <span class="badge rounded-pill text-bg-custom-low py-2 fs-6 ">Нейтрально</span>
-                            {% elif requests.priority == "2" %}
-                                <span class="badge rounded-pill text-bg-custom-medium py-2 fs-6">Средний</span>
-                            {% elif requests.priority == "3" %}
-                                <span class="badge rounded-pill text-bg-custom-urgent py-2 fs-6">Важно</span>
-                            {% endif %}
-                        </div>
-                        <div class="col text-end">
-                            <div class="text-muted">{{ requests.time }}</div>
+                        <h5 class="card-title text-dark mt-3">{{ requests.theme }}</h5>
+                        <p class="card-text text-muted ">{{ requests.requesting_message }}</p>
+                        {% if requests.image != "" %}
+                            <div class="img-fluid">
+                                <img src="{{ requests.image_thumbnail.url }}" id="image" class="rounded border border-primary" alt="" name = {{ requests.image.url }}>
+                            </div>
+                        {% endif %}
+                        <div class="row mt-3">
+                            <div class="col">
+                                {% if requests.priority == "1" %}
+                                    <span class="badge rounded-pill text-bg-custom-low py-2 fs-6 ">Нейтрально</span>
+                                {% elif requests.priority == "2" %}
+                                    <span class="badge rounded-pill text-bg-custom-medium py-2 fs-6">Средний</span>
+                                {% elif requests.priority == "3" %}
+                                    <span class="badge rounded-pill text-bg-custom-urgent py-2 fs-6">Важно</span>
+                                {% endif %}
+                            </div>
+                            <div class="col text-end">
+                                <div class="text-muted">{{ requests.time }}</div>
+                            </div>
                         </div>
                     </div>
                 </div>
+                <div class="text-end">
+                    <div class="col text-end">
+                        {% if requests.implementer is None and request.user.is_staff == True %}
+                            <form method="post" action="{% url 'takereq' requests.pk %}">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-outline-primary">
+                                    <i class="bi bi-arrow-right"></i>
+                                </button>
+                            </form>
+                        {% elif requests.implementer == request.user and requests.active == True %}
+                            <form method="post" action="{% url 'delreq' requests.pk %}">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="bi bi-check2"></i>
+                                </button>
+                            </form>
+                        {% elif request.user not in requests.soimplementor.all and request.user.is_staff == True and requests.active == True %}
+                            <form method="post" action="{% url 'joinreq' requests.pk %}">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-outline-success">
+                                    <i class="bi bi-person-plus-fill"></i>
+                                </button>
+                            </form>
+                            <div class="div"></div>
+                        {% endif %}
+                    </div>
+                </div>
+                {% for chat_message in requests.messages.all %}
+                    <div class="card-body">
+                        <h5 class="card-title text-dark mt-3">{{ chat_message.user.first_name }} {{ chat_message.user.last_name }}</h5>
+                        <p class="card-text text-muted ">{{ chat_message.message }}</p>
+                        {% if chat_message.image != "" %}
+                            <div class="img-fluid">
+                                <img src="{{ chat_message.image_thumbnail.url }}" id="image" class="rounded border border-primary" alt="" name = {{ chat_message.image.url }}>
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
             </div>
+            {{ form|crispy }}
             <div class="text-end">
-                <div class="col text-end">
-                    {% if requests.implementer is None and request.user.is_staff == True %}
-                        <form method="post" action="{% url 'takereq' requests.pk %}">
-                            {% csrf_token %}
-                            <button type="submit" class="btn btn-outline-primary">
-                                <i class="bi bi-arrow-right"></i>
-                            </button>
-                        </form>
-                    {% elif requests.implementer == request.user and requests.active == True %}
-                        <form method="post" action="{% url 'delreq' requests.pk %}">
-                            {% csrf_token %}
-                            <button type="submit" class="btn btn-primary">
-                                <i class="bi bi-check2"></i>
-                            </button>
-                        </form>
-                    {% elif request.user not in requests.soimplementor.all and request.user.is_staff == True and requests.active == True %}
-                        <form method="post" action="{% url 'joinreq' requests.pk %}">
-                            {% csrf_token %}
-                            <button type="submit" class="btn btn-outline-success">
-                                <i class="bi bi-person-plus-fill"></i>
-                            </button>
-                        </form>
-                        <div class="div"></div>
-                    {% endif %}
-                </div>
-
-            </div>
-            {% for chat_message in requests.messages.all %}
-            <div class="card-body">
-                <h5 class="card-title text-dark mt-3">{{ chat_message.user.first_name }} {{chat_message.user.last_name}}</h5>
-                <p class="card-text text-muted ">{{ chat_message.message }}</p>
-                {% if chat_message.image != "" %}
-                    <div class="img-fluid">
-                        <img src="{{ chat_message.image_thumbnail.url }}" id="image" class="rounded border border-primary" alt="" name = {{ chat_message.image.url }}>
-                    </div>
-                {% endif %}
-            </div>
-            {% endfor %}
-        </div>
-                {{ form|crispy }}
-              <div class="text-end">
                 <button class="btn btn-primary send" onclick="sendMessage()">Отправить</button>
             </div>
         </div>

@@ -4,8 +4,7 @@ import re
 from django.core.exceptions import ValidationError
 
 
-PHONE_NUMBER = re.compile(
-    r"(\+7)?\s?\(?(2\d{2}|[3-9]\d{2})\)?[\s.-]?\d{3}[\s.-]?\d{4}")
+PHONE_NUMBER =  re.compile(r'^(\+\d{1,3})? ?(\()?(\d{3})(?(2)\))?[-.\s]?(\d{3})[-.\s]?(\d{2})[-.\s]?(\d{2})$')
 
 
 def validate_deadline(deadline):

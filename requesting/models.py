@@ -20,7 +20,7 @@ class CustomUser(AbstractUser, PermissionsMixin):
     first_name = models.CharField(_("first name"), max_length=150)
     last_name = models.CharField(_("last name"), max_length=150)
     phone  = models.CharField(verbose_name="Номер телефона", validators=[validators.validate_phonenumber],blank=True,max_length=25)
-    ip = models.GenericIPAddressField(blank=True,null=True)
+    ip = models.GenericIPAddressField(blank=True,null=True, verbose_name="IP Адрес",protocol='IPv4')
 
 
 class Task(models.Model):

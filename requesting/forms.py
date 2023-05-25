@@ -21,6 +21,13 @@ class TaskForm(forms.ModelForm):
         fields = ["user","theme",]
 
 
+class ProfileForm(forms.ModelForm):
+    class Meta:
+        model =CustomUser
+        fields = ["first_name","last_name","phone","ip",] 
+
+
+
 class AddrequestForm(forms.ModelForm):
     class Meta:
         model = Form

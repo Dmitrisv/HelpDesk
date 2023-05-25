@@ -1,78 +1,45 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HelpDesk | Профиль</title>
-    <link rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0-alpha1/css/bootstrap.min.css"
-    integrity="sha512-72OVeAaPeV8n3BdZj7hOkaPSEk/uwpDkaGyP4W2jSzAC8tfiO4LMEDWoL3uFp5mcZu+8Eehb4GhZWFwvrss69Q=="
-    crossorigin="anonymous"
-    referrerpolicy="no-referrer"/>
-</head>
-<body>
-    <div class="container">
-        <div class="row">
-            <div class="col-3">
-                <div>{{request.user.first_name}} {{request.user.last_name}}</div>
-                <div><a href="mailto:{{request.user.email}}">{{request.user.email}}</a></div>
-                <div>{{request.user.username}}</div>
-            </div>
-            <div class="col">
-                {{plot|safe}}
-                {% if reqs|length > 0 %}
-                <div class="container mb-3">
-                  <div class="row px-3">
-                    <div class="hstack gap-1">
-                      <div class="col-3">Время отправки заявки</div>
-                      <div class="col">Тема</div>
-                      <div class="col">Состояние</div>
-                      <div class="col">Исполнитель</div>
-                      <div class="col text-end">Выполнить до</div>
-                    </div>
-                  </div>
-                </div>
-                <div class="req">
-                  {% for dat in reqs %}
-                    <div class="container">
-                      <div class="vstack gap-5 rounded-3 p-4 my-3 shadow border
-                                  {% if dat.priority == "3" %}
-                                    border-danger
-                                  {% elif dat.priority == "2" %}
-                                    border-warning
-                                  {% elif dat.priority == "1" %}
-                                    border-success
-                                  {% endif %}">
-                        <div class="hstack gap-1">
-                          <div class="col-3 text-muted">{{ dat.time }}</div>
-                          <div class="col fw-bold">{{ dat.theme|truncatechars:20 }}</div>
-                          {% if dat.actual is True or dat.state == "Завершено" %}
-                            <div class="col text-state">{{ dat.state }}</div>
-                          {% else %}
-                            <div class="col text-state">Просрочено</div>
-                          {% endif %}
-                          <div class="col">
-                            {{ dat.implementer.first_name }} {{ dat.implementer.last_name }}
-                          </div>
-                          <div class="col text-end">{{ dat.deadline }}</div>
-                        </div>
-                      </div>
-                    </div>
-                  {% endfor %}
-                {% else %}
-                  У вас пока что нет заявок
-                {% endif %}
-              </div>
-                {% if reqs|length == 5 %}
-                {% comment %} <a href="{% url 'history' %}"> {% endcomment %}
-                    <div class="container">
-                <button type="button" class="btn btn-primary w-100">История</button>
-                    </div>
-                </a>
-                {% endif %}
-            </div>
+{% extends 'profile/base_profile.html' %}
+{% block content %}
+  {{ plot|safe }}
+  {% if reqs|length > 0 %}
+    <div class="container mb-3">
+      <div class="row px-3">
+        <div class="hstack gap-1">
+          <div class="col-3">Время отправки заявки</div>
+          <div class="col">Тема</div>
+          <div class="col">Состояние</div>
+          <div class="col">Исполнитель</div>
+          <div class="col text-end">Выполнить до</div>
         </div>
+      </div>
     </div>
-</body>
-</html>
+    <div class="req">
+      {% for dat in reqs %}
+        <div class="container">
+          <div class="vstack gap-5 rounded-3 p-4 my-3 shadow border {% if dat.priority == "3" %} border-danger {% elif dat.priority == "2" %} border-warning {% elif dat.priority == "1" %} border-success {% endif %}">
+            <div class="hstack gap-1">
+              <div class="col-3 text-muted">{{ dat.time }}</div>
+              <div class="col fw-bold">{{ dat.theme|truncatechars:20 }}</div>
+              {% if dat.actual is True or dat.state == "Завершено" %}
+                <div class="col text-state">{{ dat.state }}</div>
+              {% else %}
+                <div class="col text-state">Просрочено</div>
+              {% endif %}
+              <div class="col">{{ dat.implementer.first_name }} {{ dat.implementer.last_name }}</div>
+              <div class="col text-end">{{ dat.deadline }}</div>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    {% else %}
+      У вас пока что нет заявок
+    {% endif %}
+  </div>
+  {% if reqs|length == 5 %}
+    <a href="{% url 'history' %}">
+      <div class="container">
+        <button type="button" class="btn btn-primary w-100">История</button>
+      </div>
+    </a>
+  {% endif %}
+{% endblock content %}

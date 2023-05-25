@@ -1,0 +1,12 @@
+{% extends 'profile/base_profile.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <div class="fs-3 mb-3">Публичный профиль</div>
+    <form method="post">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <div class="text-end">
+            <button type="submit" class="btn btn-primary px-5 ">Обновить</button>
+        </div>
+    </form>
+{% endblock content %}

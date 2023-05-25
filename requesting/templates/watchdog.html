@@ -1,6 +1,5 @@
 {% load crispy_forms_tags %}
 {% load static %}
-
 <!DOCTYPE html>
 <html lang="ru">
   <head>
@@ -30,10 +29,7 @@
       <div class="container g-0">
         {% for form in data %}
           <a href="{% url 'request_info' form.id %}" class="text-decoration-none">
-            <div class="card-flush shadow p-3 rounded mb-3
-                        {% if form.actual is False %}
-                          border border-danger
-                        {% endif %}">
+            <div class="card-flush shadow p-3 rounded mb-3 {% if form.actual is False %} border border-danger{% endif %}">
               <div class="card-body">
                 <div class="row">
                   <div class="col">
