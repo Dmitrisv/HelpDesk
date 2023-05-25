@@ -1,6 +1,10 @@
 {% extends 'profile/base_profile.html' %}
 {% load crispy_forms_tags %}
 {% block content %}
+<a class="icon-link icon-link-hover"  href="{% url 'profile' %}">
+    <i class="bi bi-arrow-left"></i>
+    Вернуться в профиль
+  </a>
     <div class="fs-3 mb-3">Публичный профиль</div>
     <form method="post">
         {% csrf_token %}
@@ -9,4 +13,6 @@
             <button type="submit" class="btn btn-primary px-5 ">Обновить</button>
         </div>
     </form>
+        
+
 {% endblock content %}

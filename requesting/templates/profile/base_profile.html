@@ -31,18 +31,22 @@
                     <div class="fs-3">Настройки</div>
                     <div class="fs-6 text-muted mt-3">Основные</div>
                     <a href="{% url 'profile_settings' %}">
-                        <button type="button" class="btn btn-sm btn-lightly text-start w-100 py-2">
+                        <button type="button" class="btn btn-sm btn-outline-primary mb-2 text-start w-100 py-2">
                             <i class="bi bi-person-circle me-1"></i>Публичный профиль
                         </button>
                     </a>
-                    <button type="button" class="btn btn-sm btn-lightly text-start w-100 py-2">
+                    <a href="{% url 'security_settings' %}">
+                    <button type="button" class="btn btn-sm btn-outline-primary mb-2  text-start w-100 py-2">
                         <i class="bi bi-lock me-1"></i>Безопасность
                     </button>
-                    <button type="button" class="btn btn-sm btn-lightly text-start w-100 py-2">
-                        <i class="bi bi-palette me-1"></i>Внешний вид
-                    </button>
-                    <button type="button" class="btn btn-sm btn-lightly text-start w-100 py-2">История</button>
-                    <button type="button" class="btn btn-sm btn-lightly text-start w-100 py-2">История</button>
+                    </a>
+                    <a href="{% url 'appearance_settings' %}">
+                        <button type="button" class="btn btn-sm btn-outline-primary mb-2 text-start w-100 py-2">
+                            <i class="bi bi-palette me-1"></i>Внешний вид
+                        </button>
+                    </a>
+                    <button type="button" class="btn btn-sm btn-outline-primary text-start w-100 py-2">История</button>
+                    <button type="button" class="btn btn-sm btn-outline-primary text-start w-100 py-2">История</button>
                 </div>
                 <div class="col">
                     {% block content %}

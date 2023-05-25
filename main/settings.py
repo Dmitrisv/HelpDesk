@@ -127,6 +127,7 @@ TEMPLATES = [
     }
 ]
 
+
 CRISPY_TEMPLATE_PACK = "bootstrap5"
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 

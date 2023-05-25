@@ -17,9 +17,10 @@ import plotly.offline as opy
 from datetime import datetime, timedelta
 from django.views.generic import ListView, UpdateView
 from django.http import HttpResponseRedirect
+from django.contrib.auth import update_session_auth_hash
 
 from . import models
-from .forms import AddrequestForm, RegisterForm, TaskForm, MessageForm,CustomUser
+from .forms import AddrequestForm, RegisterForm, TaskForm, MessageForm,CustomUser,CustomChangePasswordForm
 from django.contrib.auth.models import Group
 
 def create_plot(user):
@@ -161,6 +162,26 @@ def sub_implementor(request, id):
         req.soimplementor.add(request.user)
     return redirect("requests")
 
+@login_required
+def set_appearance(request):
+    return render(request,"appearance_settings.html")
+
+
+@login_required
+def change_password(request):
+    if request.method == 'POST':
+        form = CustomChangePasswordForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)
+            return redirect('change_password')
+    else:
+        form = CustomChangePasswordForm(request.user)
+
+        
+    return render(request, 'security_settings.html', {
+        'form': form
+    })
 
 class PublicProfileView(UpdateView):
     model = CustomUser

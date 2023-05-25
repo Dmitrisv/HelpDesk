@@ -10,8 +10,18 @@
               integrity="sha512-72OVeAaPeV8n3BdZj7hOkaPSEk/uwpDkaGyP4W2jSzAC8tfiO4LMEDWoL3uFp5mcZu+8Eehb4GhZWFwvrss69Q=="
               crossorigin="anonymous"
               referrerpolicy="no-referrer"/>
+        <link rel="stylesheet"
+              href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.3/font/bootstrap-icons.min.css"
+              integrity="sha512-YFENbnqHbCRmJt5d+9lHimyEMt8LKSNTMLSaHjvsclnZGICeY/0KYEeiHwD1Ux4Tcao0h60tdcMv+0GljvWyHg=="
+              crossorigin="anonymous"
+              referrerpolicy="no-referrer"/>
     </head>
     <body>
+        <div class="container">
+            <a class="icon-link icon-link-hover"  href="{% url 'profile' %}">
+                <i class="bi bi-arrow-left"></i>
+                Вернуться в профиль
+              </a>
         {% for form in forms %}
             <div class="container">
                 <div class="vstack gap-5 rounded-3 p-4 my-3 shadow border {% if form.priority == "3" %} border-danger {% elif form.priority == "2" %} border-warning {% elif form.priority == "1" %} border-success {% endif %}">
@@ -61,5 +71,7 @@
             {% endif %}
         </ul>
     </div>
+</div>
+
 </body>
 </html>

@@ -1,11 +1,15 @@
 from collections import defaultdict
+from typing import Any, Optional
 
 from django import forms
+from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.auth.forms import UserCreationForm
 from django.forms import ModelChoiceField
 
 from .models import Form, Task, CustomUser, FormMessage
 from django.contrib.auth.models import Group,User
+from django.contrib.auth.forms import PasswordChangeForm
+
 
 class TaskForm(forms.ModelForm):
 
@@ -38,6 +42,15 @@ class MessageForm(forms.ModelForm):
     class Meta:
         model = FormMessage
         fields = ['message',"image"]
+
+
+class CustomChangePasswordForm(PasswordChangeForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        help_text = defaultdict(lambda: "")
+        for field in self:
+            field.help_text = help_text[field.name]
+
 
 
 class RegisterForm(UserCreationForm):

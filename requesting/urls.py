@@ -14,9 +14,11 @@ urlpatterns = [
     path('done-task/<int:id>', views.taskdone, name="taskdone"),
     path("sign-up/", views.sign_up),
     path('password-reset/', auth_views.PasswordResetView.as_view(
-        html_email_template_name='registration/password_reset_email.html')),
+        html_email_template_name='registration/password_reset_email.html'),name="reset_password"),
     path("request/<int:id>", views.req_info, name="request_info"),
     path("profile/",views.profile,name="profile"),
-    path("settings/profile",PublicProfileView.as_view(),name = "profile_settings"),
+    path("settings/profile/",PublicProfileView.as_view(),name = "profile_settings"),
+    path("settings/security/",views.change_password,name = "security_settings"),
+    path("settings/appearance/",views.set_appearance,name = "appearance_settings"),
     path("history/",HistoryListView.as_view(),name="history"),
 ]
