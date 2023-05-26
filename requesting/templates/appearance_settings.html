@@ -1,82 +1,43 @@
 {% extends 'profile/base_profile.html' %}
 {% block content %}
-
-<button data-bs-theme-value="dark">Темная тема</button>
-<button data-bs-theme-value="light">Светлая тема</button>
-<button data-bs-theme-value="auto">Автоматическая</button>
-
-<script>
-    (() => {
-        'use strict'
-      
-        const storedTheme = localStorage.getItem('theme')
-      
-        const getPreferredTheme = () => {
-          if (storedTheme) {
-            return storedTheme
-          }
-      
-          return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
-        }
-      
-        const setTheme = function (theme) {
-          if (theme === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-            document.documentElement.setAttribute('data-bs-theme', 'dark')
-          } else {
-            document.documentElement.setAttribute('data-bs-theme', theme)
-          }
-        }
-      
-        setTheme(getPreferredTheme())
-      
-        const showActiveTheme = (theme, focus = false) => {
-          const themeSwitcher = document.querySelector('#bd-theme')
-      
-          if (!themeSwitcher) {
-            return
-          }
-      
-          const themeSwitcherText = document.querySelector('#bd-theme-text')
-          const activeThemeIcon = document.querySelector('.theme-icon-active use')
-          const btnToActive = document.querySelector(`[data-bs-theme-value="${theme}"]`)
-          const svgOfActiveBtn = btnToActive.querySelector('svg use').getAttribute('href')
-      
-          document.querySelectorAll('[data-bs-theme-value]').forEach(element => {
-            element.classList.remove('active')
-            element.setAttribute('aria-pressed', 'false')
-          })
-      
-          btnToActive.classList.add('active')
-          btnToActive.setAttribute('aria-pressed', 'true')
-          activeThemeIcon.setAttribute('href', svgOfActiveBtn)
-          const themeSwitcherLabel = `${themeSwitcherText.textContent} (${btnToActive.dataset.bsThemeValue})`
-          themeSwitcher.setAttribute('aria-label', themeSwitcherLabel)
-      
-          if (focus) {
-            themeSwitcher.focus()
-          }
-        }
-      
-        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
-          if (storedTheme !== 'light' || storedTheme !== 'dark') {
-            setTheme(getPreferredTheme())
-          }
-        })
-      
-        window.addEventListener('DOMContentLoaded', () => {
-          showActiveTheme(getPreferredTheme())
-      
-          document.querySelectorAll('[data-bs-theme-value]')
-            .forEach(toggle => {
-              toggle.addEventListener('click', () => {
-                const theme = toggle.getAttribute('data-bs-theme-value')
-                localStorage.setItem('theme', theme)
-                setTheme(theme)
-                showActiveTheme(theme, true)
-              })
-            })
-        })
-      })()
-</script>
-
+    {% load static %}
+    <div class="container">
+        <a class="icon-link icon-link-hover"  href="{% url 'profile' %}">
+            <i class="bi bi-arrow-left"></i>
+            Вернуться в профиль
+        </a>
+        <div class="fs-3 mb-3">Внешний вид</div>
+        <div class="row row-cols-lg-3 row-cols-md-1 row-cols-sm-1 row-cols-1 row-cols-xs-1">
+            <div class="col">
+                <div class="card mb-3" data-bs-theme-value="dark" style="cursor: pointer;">
+                    <img src="{% static 'requesting/dark_preview.svg' %}"
+                         class="card-img-top img-fluid">
+                    <div class="card-body">
+                        <p class="card-text text-center">Темная тема</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card mb-3" data-bs-theme-value="light" style="cursor: pointer">
+                    <img src="{% static 'requesting/light_preview.svg' %}"
+                         class="card-img-top img-fluid">
+                    <div class="card-body">
+                        <p class="card-text text-center">Светлая тема</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card mb-3" data-bs-theme-value="auto"style="cursor: pointer;">
+                    <img src="{% static 'requesting/auto.png' %}"
+                         class="card-img-top img-fluid">
+                    <div class="card-body">
+                        <p class="card-text text-center">Автоматически</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock content %}
+{% block scripts %}
+    <script src="{% static 'js/theme_switcher.js' %}"></script>
+{% endblock scripts %}

@@ -64,7 +64,6 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 ROOT_URLCONF = "main.urls"
 ASGI_APPLICATION = "main.asgi.application"
-WSGI_APPLICATION = "main.wsgi.application"
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
 INSTALLED_APPS = [

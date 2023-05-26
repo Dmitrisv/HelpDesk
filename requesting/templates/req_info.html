@@ -11,17 +11,17 @@
               href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0-alpha1/css/bootstrap.min.css"
               integrity="sha512-72OVeAaPeV8n3BdZj7hOkaPSEk/uwpDkaGyP4W2jSzAC8tfiO4LMEDWoL3uFp5mcZu+8Eehb4GhZWFwvrss69Q=="
               crossorigin="anonymous"
-              referrerpolicy="no-referrer"/>
+              referrerpolicy="no-referrer" />
         <link rel="stylesheet"
               href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.3/font/bootstrap-icons.min.css"
               integrity="sha512-YFENbnqHbCRmJt5d+9lHimyEMt8LKSNTMLSaHjvsclnZGICeY/0KYEeiHwD1Ux4Tcao0h60tdcMv+0GljvWyHg=="
               crossorigin="anonymous"
-              referrerpolicy="no-referrer"/>
+              referrerpolicy="no-referrer" />
         <link rel="stylesheet"
               href="https://cdnjs.cloudflare.com/ajax/libs/viewerjs/1.11.3/viewer.css"
               integrity="sha512-0IJ01kDH6fR7Oo1QEcyF+PgSLpefYXuGICVfNNoOseW6+HmsoaHzSZ7BAnwuu6BoK+nSn9WOeh0kiNjPNtGpuw=="
               crossorigin="anonymous"
-              referrerpolicy="no-referrer"/>
+              referrerpolicy="no-referrer" />
         <link rel="stylesheet" href="{% static 'css/custom-elements.css' %}">
     </head>
     <body>
@@ -40,7 +40,7 @@
                 </ol>
             </nav>
             <div class="chat-container">
-                <div class="card-flush shadow p-3  rounded mb-3 {% if requests.actual is False %} border border-danger{% endif %}">
+                <div class="card-flush shadow p-3  rounded mb-3 {% if requests.actual is False %}border border-danger{% endif %}">
                     <div class="card-body">
                         <div class="overflow-x-auto d-flex">
                             <span class="badge fs-6 me-1 rounded-pill text-bg-custom-medium"><i class="bi bi-person-circle"></i> {{ requests.user.first_name }} {{ requests.user.last_name }}</span>
@@ -119,6 +119,9 @@
 <script defer type="text/javascript" src="{% static 'js/view.js' %}"></script>
 <script defer type="text/javascript" src="{% static 'js/paste.js' %}"></script>
 <script defer type="text/javascript" src="{% static 'js/chat.js' %}"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/viewerjs/1.11.3/viewer.min.js" integrity="sha512-f8kZwYACKF8unHuRV7j/5ILZfflRncxHp1f6y/PKuuRpCVgpORNZMne1jrghNzTVlXabUXIg1iJ5PvhuAaau6Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/viewerjs/1.11.3/viewer.min.js"
+        integrity="sha512-f8kZwYACKF8unHuRV7j/5ILZfflRncxHp1f6y/PKuuRpCVgpORNZMne1jrghNzTVlXabUXIg1iJ5PvhuAaau6Q=="
+        crossorigin="anonymous"
+        referrerpolicy="no-referrer"></script>
 </body>
 </html>

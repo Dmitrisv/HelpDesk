@@ -2,55 +2,59 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="ru">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Заявки</title>
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0-alpha1/css/bootstrap.min.css"
-          integrity="sha512-72OVeAaPeV8n3BdZj7hOkaPSEk/uwpDkaGyP4W2jSzAC8tfiO4LMEDWoL3uFp5mcZu+8Eehb4GhZWFwvrss69Q=="
-          crossorigin="anonymous"
-          referrerpolicy="no-referrer"/>
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.3/font/bootstrap-icons.min.css"
-          integrity="sha512-YFENbnqHbCRmJt5d+9lHimyEMt8LKSNTMLSaHjvsclnZGICeY/0KYEeiHwD1Ux4Tcao0h60tdcMv+0GljvWyHg=="
-          crossorigin="anonymous"
-          referrerpolicy="no-referrer"/>
-    <link rel="stylesheet" href="{% static 'css/custom-elements.css' %}">
-  </head>
-  <body>
-    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0-alpha1/js/bootstrap.bundle.min.js" integrity="sha512-Sct/LCTfkoqr7upmX9VZKEzXuRk5YulFoDTunGapYJdlCwA+Rl4RhgcPCLf7awTNLmIVrszTPNUFu4MSesep5Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <div class="container mt-3">
-      <nav class="nav nav-pills nav-justified mb-4">
-        <a class="nav-link active"><span class="badge bg-danger me-1 ">{{ data|length }}</span>Заявки</a>
-        <a class="nav-link" href="{% url 'tasks' %}"><span class="badge bg-danger me-1">{{ tasks }}</span>Поручения</a>
-      </nav>
-      <div class="container g-0">
-        {% for form in data %}
-          <a href="{% url 'request_info' form.id %}" class="text-decoration-none">
-            <div class="card-flush shadow p-3 rounded mb-3 {% if form.actual is False %} border border-danger{% endif %}">
-              <div class="card-body">
-                <div class="row">
-                  <div class="col">
-                    <h5 class="card-title text-dark">{{ form.theme }}</h5>
-                  </div>
-                  <div class="col text-end text-dark">{{ form.time }}</div>
-                </div>
-                <p class="card-text text-muted py-3">{{ form.requesting_message }}</p>
-                {% if form.priority == "1" %}
-                  <span class="badge rounded-pill text-bg-custom-low  py-2 fs-6">Нейтрально</span>
-                {% elif form.priority == "2" %}
-                  <span class="badge rounded-pill text-bg-custom-medium py-2 fs-6">Средний</span>
-                {% elif form.priority == "3" %}
-                  <span class="badge rounded-pill text-bg-custom-urgent py-2 fs-6 ">Важно</span>
-                {% endif %}
-              </div>
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Заявки</title>
+        <link rel="stylesheet"
+              href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0-alpha1/css/bootstrap.min.css"
+              integrity="sha512-72OVeAaPeV8n3BdZj7hOkaPSEk/uwpDkaGyP4W2jSzAC8tfiO4LMEDWoL3uFp5mcZu+8Eehb4GhZWFwvrss69Q=="
+              crossorigin="anonymous"
+              referrerpolicy="no-referrer" />
+        <link rel="stylesheet"
+              href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.3/font/bootstrap-icons.min.css"
+              integrity="sha512-YFENbnqHbCRmJt5d+9lHimyEMt8LKSNTMLSaHjvsclnZGICeY/0KYEeiHwD1Ux4Tcao0h60tdcMv+0GljvWyHg=="
+              crossorigin="anonymous"
+              referrerpolicy="no-referrer" />
+        <link rel="stylesheet" href="{% static 'css/custom-elements.css' %}">
+    </head>
+    <body>
+        <script defer
+                src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0-alpha1/js/bootstrap.bundle.min.js"
+                integrity="sha512-Sct/LCTfkoqr7upmX9VZKEzXuRk5YulFoDTunGapYJdlCwA+Rl4RhgcPCLf7awTNLmIVrszTPNUFu4MSesep5Q=="
+                crossorigin="anonymous"
+                referrerpolicy="no-referrer"></script>
+        <div class="container mt-3">
+            <nav class="nav nav-pills nav-justified mb-4">
+                <a class="nav-link active"><span class="badge bg-danger me-1 ">{{ data|length }}</span>Заявки</a>
+                <a class="nav-link" href="{% url 'tasks' %}"><span class="badge bg-danger me-1">{{ tasks }}</span>Поручения</a>
+            </nav>
+            <div class="container g-0">
+                {% for form in data %}
+                    <a href="{% url 'request_info' form.id %}" class="text-decoration-none">
+                        <div class="card-flush shadow p-3 rounded mb-3 {% if form.actual is False %}border border-danger{% endif %}">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col">
+                                        <h5 class="card-title text-dark">{{ form.theme }}</h5>
+                                    </div>
+                                    <div class="col text-end text-dark">{{ form.time }}</div>
+                                </div>
+                                <p class="card-text text-muted py-3">{{ form.requesting_message }}</p>
+                                {% if form.priority == "1" %}
+                                    <span class="badge rounded-pill text-bg-custom-low  py-2 fs-6">Нейтрально</span>
+                                {% elif form.priority == "2" %}
+                                    <span class="badge rounded-pill text-bg-custom-medium py-2 fs-6">Средний</span>
+                                {% elif form.priority == "3" %}
+                                    <span class="badge rounded-pill text-bg-custom-urgent py-2 fs-6 ">Важно</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </a>
+                {% endfor %}
             </div>
-          </a>
-        {% endfor %}
-      </div>
-    </div>
-    <script async src="{% static 'js/helpers.js' %}"></script>
-  </body>
+        </div>
+        <script async src="{% static 'js/helpers.js' %}"></script>
+    </body>
 </html>

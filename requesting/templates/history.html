@@ -9,69 +9,68 @@
               href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0-alpha1/css/bootstrap.min.css"
               integrity="sha512-72OVeAaPeV8n3BdZj7hOkaPSEk/uwpDkaGyP4W2jSzAC8tfiO4LMEDWoL3uFp5mcZu+8Eehb4GhZWFwvrss69Q=="
               crossorigin="anonymous"
-              referrerpolicy="no-referrer"/>
+              referrerpolicy="no-referrer" />
         <link rel="stylesheet"
               href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.3/font/bootstrap-icons.min.css"
               integrity="sha512-YFENbnqHbCRmJt5d+9lHimyEMt8LKSNTMLSaHjvsclnZGICeY/0KYEeiHwD1Ux4Tcao0h60tdcMv+0GljvWyHg=="
               crossorigin="anonymous"
-              referrerpolicy="no-referrer"/>
+              referrerpolicy="no-referrer" />
     </head>
     <body>
         <div class="container">
             <a class="icon-link icon-link-hover"  href="{% url 'profile' %}">
                 <i class="bi bi-arrow-left"></i>
                 Вернуться в профиль
-              </a>
-        {% for form in forms %}
-            <div class="container">
-                <div class="vstack gap-5 rounded-3 p-4 my-3 shadow border {% if form.priority == "3" %} border-danger {% elif form.priority == "2" %} border-warning {% elif form.priority == "1" %} border-success {% endif %}">
-                    <div class="hstack gap-1">
-                        <div class="col-3 text-muted">{{ form.time }}</div>
-                        <div class="col fw-bold">{{ form.theme|truncatechars:20 }}</div>
-                        {% if form.actual is True or form.state == "Завершено" %}
-                            <div class="col text-state">{{ form.state }}</div>
-                        {% else %}
-                            <div class="col text-state">Просрочено</div>
-                        {% endif %}
-                        <div class="col">{{ form.implementer.first_name }} {{ form.implementer.last_name }}</div>
-                        <div class="col text-end">{{ form.deadline }}</div>
+            </a>
+            {% for form in forms %}
+                <div class="container">
+                    <div class="vstack gap-5 rounded-3 p-4 my-3 shadow border {% if form.priority == "3" %} border-danger {% elif form.priority == "2" %} border-warning {% elif form.priority == "1" %} border-success {% endif %}">
+                        <div class="hstack gap-1">
+                            <div class="col-3 text-muted">{{ form.time }}</div>
+                            <div class="col fw-bold">{{ form.theme|truncatechars:20 }}</div>
+                            {% if form.actual is True or form.state == "Завершено" %}
+                                <div class="col text-state">{{ form.state }}</div>
+                            {% else %}
+                                <div class="col text-state">Просрочено</div>
+                            {% endif %}
+                            <div class="col">{{ form.implementer.first_name }} {{ form.implementer.last_name }}</div>
+                            <div class="col text-end">{{ form.deadline }}</div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        {% endfor %}
-        <ul class="pagination justify-content-center">
-            {% if page_obj.has_previous %}
-                <li class="page-item">
-                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Предыдущая</a>
-                </li>
-            {% else %}
-                <li class="page-item">
-                    <a class="page-link disabled">Предыдущая</a>
-                </li>
-            {% endif %}
-            {% for p in page_obj.paginator.page_range %}
-                {% if page_obj.number == p %}
+            {% endfor %}
+            <ul class="pagination justify-content-center">
+                {% if page_obj.has_previous %}
                     <li class="page-item">
-                        <a class="page-link active" href="?page={{ p }}">{{ p }}</a>
+                        <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Предыдущая</a>
                     </li>
                 {% else %}
                     <li class="page-item">
-                        <a class="page-link" href="?page={{ p }}">{{ p }}</a>
+                        <a class="page-link disabled">Предыдущая</a>
                     </li>
                 {% endif %}
-            {% endfor %}
-            {% if page_obj.has_next %}
-                <li class="page-item">
-                    <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Следующая</a>
-                </li>
-            {% else %}
-                <li class="page-item">
-                    <a class="page-link disabled">Следующая</a>
-                </li>
-            {% endif %}
-        </ul>
+                {% for p in page_obj.paginator.page_range %}
+                    {% if page_obj.number == p %}
+                        <li class="page-item">
+                            <a class="page-link active" href="?page={{ p }}">{{ p }}</a>
+                        </li>
+                    {% else %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ p }}">{{ p }}</a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+                {% if page_obj.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Следующая</a>
+                    </li>
+                {% else %}
+                    <li class="page-item">
+                        <a class="page-link disabled">Следующая</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
     </div>
-</div>
-
 </body>
 </html>
