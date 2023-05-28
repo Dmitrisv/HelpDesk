@@ -192,7 +192,7 @@ class PublicProfileView(UpdateView):
         self.object = form.save(commit=False)
         self.object.user = self.request.user
         self.object.save()
-        return HttpResponseRedirect("profile")
+        return HttpResponseRedirect("/settings/profile/")
 
 
     def get_object(self,):

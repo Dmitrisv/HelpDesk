@@ -19,7 +19,7 @@ chatSocket.onmessage = (e) =>{
     
         let html = `
         <div class="card-body">
-            <h5 class="card-title text-dark mt-3">${username}</h5>
+            <h5 class="card-title mt-3">${username}</h5>
             <p class="card-text text-muted">${messageContent}</p>
     `;
     

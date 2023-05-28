@@ -37,9 +37,9 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col">
-                                        <h5 class="card-title text-dark">{{ form.theme }}</h5>
+                                        <h5 class="card-title text-body ">{{ form.theme }}</h5>
                                     </div>
-                                    <div class="col text-end text-dark">{{ form.time }}</div>
+                                    <div class="col text-end text-muted">{{ form.time }}</div>
                                 </div>
                                 <p class="card-text text-muted py-3">{{ form.requesting_message }}</p>
                                 {% if form.priority == "1" %}
@@ -56,5 +56,6 @@
             </div>
         </div>
         <script async src="{% static 'js/helpers.js' %}"></script>
+        <script async src="{% static 'js/theme.js' %}"></script>
     </body>
 </html>

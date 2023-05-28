@@ -47,7 +47,7 @@
                             <span class="badge fs-6 me-1 rounded-pill text-bg-custom-medium"><i class="bi bi-buildings"></i> {{ requests.user.groups.first.name }}</span>
                             <span class="badge fs-6 me-1 rounded-pill text-bg-custom-medium"><i class="bi bi-geo-alt-fill"></i>{{ requests.location }} кабинет</span>
                         </div>
-                        <h5 class="card-title text-dark mt-3">{{ requests.theme }}</h5>
+                        <h5 class="card-title  mt-3">{{ requests.theme }}</h5>
                         <p class="card-text text-muted ">{{ requests.requesting_message }}</p>
                         {% if requests.image != "" %}
                             <div class="img-fluid">
@@ -99,7 +99,7 @@
                 </div>
                 {% for chat_message in requests.messages.all %}
                     <div class="card-body">
-                        <h5 class="card-title text-dark mt-3">{{ chat_message.user.first_name }} {{ chat_message.user.last_name }}</h5>
+                        <h5 class="card-title  mt-3">{{ chat_message.user.first_name }} {{ chat_message.user.last_name }}</h5>
                         <p class="card-text text-muted ">{{ chat_message.message }}</p>
                         {% if chat_message.image != "" %}
                             <div class="img-fluid">
@@ -119,6 +119,7 @@
 <script defer type="text/javascript" src="{% static 'js/view.js' %}"></script>
 <script defer type="text/javascript" src="{% static 'js/paste.js' %}"></script>
 <script defer type="text/javascript" src="{% static 'js/chat.js' %}"></script>
+<script async src="{% static 'js/theme.js' %}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/viewerjs/1.11.3/viewer.min.js"
         integrity="sha512-f8kZwYACKF8unHuRV7j/5ILZfflRncxHp1f6y/PKuuRpCVgpORNZMne1jrghNzTVlXabUXIg1iJ5PvhuAaau6Q=="
         crossorigin="anonymous"
