@@ -30,11 +30,12 @@ EMAIL_SUBJECT_PREFIX = '[HelpDesk]'
 
 CKEDITOR_CONFIGS = {
     'default': {
-            'toolbar': [
+        'toolbar': [
         ['Font','FontSize'],
         ['Bold','Italic','Underline'],
         ['TextColor','BGColor'],
-        ['JustifyLeft', 'JustifyCenter', 'JustifyRight'],["image"]
+        ['JustifyLeft', 'JustifyCenter', 'JustifyRight'],["Image"],['Maximize', 'ShowBlocks'],
+        ['Link', 'Unlink', 'Anchor']
     ],
     },
 }
@@ -94,7 +95,7 @@ INSTALLED_APPS = [
     "ckeditor_uploader",
 ]
 
-CKEDITOR_UPLOAD_PATH = "media/articles"
+CKEDITOR_UPLOAD_PATH = "./media/articles"
 
 LOGIN_REDIRECT_URL = "new"
 LOGIN_URL = "login"
@@ -138,7 +139,6 @@ TEMPLATES = [
         },
     }
 ]
-
 
 CRISPY_TEMPLATE_PACK = "bootstrap5"
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"

@@ -1,4 +1,3 @@
-from typing import Any, Optional
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
@@ -18,6 +17,8 @@ from datetime import datetime, timedelta
 from django.views.generic import ListView, UpdateView
 from django.http import HttpResponseRedirect
 from django.contrib.auth import update_session_auth_hash
+from django.db.models import Q
+
 
 from . import models
 from .forms import AddrequestForm, RegisterForm, TaskForm, MessageForm,CustomUser,CustomChangePasswordForm
@@ -72,6 +73,22 @@ def get_all_requests(request):
     )
     return render(request, "watchdog.html", {"data": data, "tasks": count_taks})
 
+@login_required
+def articles(request):
+    query = request.GET.get('q') 
+    articles = models.Article.objects.values('title', 'slug')
+
+    if query:
+        articles = articles.filter(
+            Q(title__contains=query) 
+        )
+    return render(request,"articles.html",{"articles":articles})
+
+
+@login_required
+def get_article(request,article_slug):
+    article = get_object_or_404(models.Article,slug = article_slug)
+    return render(request,"article.html",{"article": article,})
 
 def sign_up(request):
     if request.user.is_authenticated:

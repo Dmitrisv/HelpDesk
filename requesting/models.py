@@ -5,6 +5,7 @@ from django.core.validators import MinValueValidator
 from django.db import models
 from django.contrib.auth.models import AbstractUser, PermissionsMixin
 from . import validators
+from django.urls import reverse
 from imagekit.models import ImageSpecField
 from imagekit.processors import ResizeToFill
 from ckeditor.fields import RichTextField
@@ -16,8 +17,16 @@ PRIORITY = (
 )
 
 class Article(models.Model):
-    title = models.CharField(max_length=120,blank=True)
+    title = models.CharField(max_length=120,verbose_name="Название")
+    slug = models.SlugField(_("Url"),max_length=255,unique=True,db_index=True,)
     content = RichTextField()
+
+    def get_absolute_url(self):
+        return reverse("article", kwargs={"article_slug": self.slug})
+    
+    class Meta:
+        verbose_name = "Статья"
+        verbose_name_plural = "Статьи"
 
     def __str__(self):
         return self.title
@@ -104,7 +113,7 @@ class Form(models.Model):
     soimplementor = models.ManyToManyField(
         CustomUser, related_name="subimplemetor", verbose_name="Соисполнитель",blank=True
     )
-    messages = models.ManyToManyField(FormMessage, verbose_name=_("Сообщения"),blank=True, null = True)
+    messages = models.ManyToManyField(FormMessage, verbose_name=_("Сообщения"),blank=True,)
 
     def __str__(self):
         return self.theme

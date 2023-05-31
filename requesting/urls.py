@@ -22,4 +22,6 @@ urlpatterns = [
     path("settings/appearance/",views.set_appearance,name = "appearance_settings"),
     path("history/",HistoryListView.as_view(),name="history"),
     path('ckeditor/', include('ckeditor_uploader.urls')),
+    path('article/<slug:article_slug>/',views.get_article,name="article"),
+    path('article/',views.articles,name="articles")
 ]
