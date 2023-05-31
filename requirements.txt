@@ -9,3 +9,4 @@ django-jazzmin
 plotly
 Pillow
 django-imagekit
+django-ckeditor

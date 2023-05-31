@@ -3,6 +3,11 @@ from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from . import models
 
 
+@admin.register(models.Article)
+class Article(admin.ModelAdmin):
+    list_display=("title",)
+
+ 
 
 @admin.register(models.CustomUser)
 class Users(BaseUserAdmin):
