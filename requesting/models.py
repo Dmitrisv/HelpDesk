@@ -7,13 +7,20 @@ from django.contrib.auth.models import AbstractUser, PermissionsMixin
 from . import validators
 from imagekit.models import ImageSpecField
 from imagekit.processors import ResizeToFill
-
+from ckeditor.fields import RichTextField
 
 PRIORITY = (
     ('1', "Нейтрально"),
     ('2', "Средне"),
     ('3', "Срочно"),
 )
+
+class Article(models.Model):
+    title = models.CharField(max_length=120,blank=True)
+    content = RichTextField()
+
+    def __str__(self):
+        return self.title
 
 
 class CustomUser(AbstractUser, PermissionsMixin):

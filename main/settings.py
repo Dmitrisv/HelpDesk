@@ -28,6 +28,16 @@ EMAIL_USE_SSL = env.bool("EMAIL_USE_SSL")
 DEFAULT_FROM_EMAIL = env.str("DEFAULT_FROM_EMAIL")
 EMAIL_SUBJECT_PREFIX = '[HelpDesk]'
 
+CKEDITOR_CONFIGS = {
+    'default': {
+            'toolbar': [
+        ['Font','FontSize'],
+        ['Bold','Italic','Underline'],
+        ['TextColor','BGColor'],
+        ['JustifyLeft', 'JustifyCenter', 'JustifyRight'],["image"]
+    ],
+    },
+}
 
 DATABASES = {
     "default": {
@@ -80,8 +90,11 @@ INSTALLED_APPS = [
     "crispy_forms",
     "dashboard",
     "imagekit",
+    "ckeditor",
+    "ckeditor_uploader",
 ]
 
+CKEDITOR_UPLOAD_PATH = "media/articles"
 
 LOGIN_REDIRECT_URL = "new"
 LOGIN_URL = "login"
