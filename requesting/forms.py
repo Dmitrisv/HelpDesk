@@ -1,47 +1,69 @@
 from collections import defaultdict
-from typing import Any, Optional
 
 from django import forms
-from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.auth.forms import UserCreationForm
 from django.forms import ModelChoiceField
 
 from .models import Form, Task, CustomUser, FormMessage
-from django.contrib.auth.models import Group,User
+from django.contrib.auth.models import Group
 from django.contrib.auth.forms import PasswordChangeForm
 
 
 class TaskForm(forms.ModelForm):
-
     class Task(ModelChoiceField):
         def label_from_instance(self, obj):
-            return f"{obj.first_name} {obj.last_name}" 
+            return f"{obj.first_name} {obj.last_name}"
 
-
-    user = Task(CustomUser.objects.filter(is_staff = True, is_superuser=False),label="Исполнитель",initial="",to_field_name="first_name")
+    user = Task(
+        CustomUser.objects.filter(is_staff=True, is_superuser=False),
+        label="Исполнитель",
+        initial="",
+        to_field_name="first_name",
+    )
 
     class Meta:
         model = Task
-        fields = ["user","theme",]
+        fields = [
+            "user",
+            "theme",
+        ]
 
 
 class ProfileForm(forms.ModelForm):
     class Meta:
-        model =CustomUser
-        fields = ["first_name","last_name","phone","ip",] 
-
+        model = CustomUser
+        fields = [
+            "first_name",
+            "last_name",
+            "phone",
+            "ip",
+        ]
 
 
 class AddrequestForm(forms.ModelForm):
     class Meta:
         model = Form
-        fields = ["theme", "requesting_message", "image", "location", "deadline","priority"]
-        widgets = {"deadline": forms.DateInput({"type": "date",})}  
+        fields = [
+            "theme",
+            "requesting_message",
+            "image",
+            "location",
+            "deadline",
+            "priority",
+        ]
+        widgets = {
+            "deadline": forms.DateInput(
+                {
+                    "type": "date",
+                }
+            )
+        }
+
 
 class MessageForm(forms.ModelForm):
     class Meta:
         model = FormMessage
-        fields = ['message',"image"]
+        fields = ["message", "image"]
 
 
 class CustomChangePasswordForm(PasswordChangeForm):
@@ -52,10 +74,8 @@ class CustomChangePasswordForm(PasswordChangeForm):
             field.help_text = help_text[field.name]
 
 
-
 class RegisterForm(UserCreationForm):
-
-    groups = forms.ModelChoiceField(Group.objects,label="Компания",initial="")
+    groups = forms.ModelChoiceField(Group.objects, label="Компания", initial="")
 
     def __init__(self, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)

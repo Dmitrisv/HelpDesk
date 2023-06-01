@@ -1,6 +1,5 @@
 from pathlib import Path
 import environ
-import os
 
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 env = environ.Env()
@@ -18,7 +17,7 @@ USE_TZ = True
 env.read_env(str(BASE_DIR / ".env"))
 
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_HOST = env.str("EMAIL_HOST")
 EMAIL_HOST_PASSWORD = env.str("EMAIL_HOST_PASSWORD")
 EMAIL_HOST_USER = env.str("EMAIL_HOST_USER")
@@ -26,16 +25,19 @@ EMAIL_PORT = env.int("EMAIL_PORT")
 EMAIL_USE_TLS = env.bool("EMAIL_USE_TLS")
 EMAIL_USE_SSL = env.bool("EMAIL_USE_SSL")
 DEFAULT_FROM_EMAIL = env.str("DEFAULT_FROM_EMAIL")
-EMAIL_SUBJECT_PREFIX = '[HelpDesk]'
+EMAIL_SUBJECT_PREFIX = "[HelpDesk]"
 
 CKEDITOR_CONFIGS = {
-    'default': {
-            'toolbar': [
-        ['Font','FontSize'],
-        ['Bold','Italic','Underline'],
-        ['TextColor','BGColor'],
-        ['JustifyLeft', 'JustifyCenter', 'JustifyRight'],["image"]
-    ],
+    "default": {
+        "toolbar": [
+            ["Font", "FontSize"],
+            ["Bold", "Italic", "Underline"],
+            ["TextColor", "BGColor"],
+            ["JustifyLeft", "JustifyCenter", "JustifyRight"],
+            ["Image"],
+            ["Maximize", "ShowBlocks"],
+            ["Link", "Unlink", "Anchor"],
+        ],
     },
 }
 
@@ -60,7 +62,7 @@ DATABASES = {
 # }
 
 
-AUTH_USER_MODEL = 'requesting.CustomUser'
+AUTH_USER_MODEL = "requesting.CustomUser"
 
 
 JAZZMIN_SETTINGS = {
@@ -77,7 +79,7 @@ ASGI_APPLICATION = "main.asgi.application"
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
 INSTALLED_APPS = [
-    'jazzmin',
+    "jazzmin",
     "requesting",
     "django.contrib.admin",
     "django.contrib.auth",
@@ -94,7 +96,7 @@ INSTALLED_APPS = [
     "ckeditor_uploader",
 ]
 
-CKEDITOR_UPLOAD_PATH = "media/articles"
+CKEDITOR_UPLOAD_PATH = "./media/articles"
 
 LOGIN_REDIRECT_URL = "new"
 LOGIN_URL = "login"
@@ -138,7 +140,6 @@ TEMPLATES = [
         },
     }
 ]
-
 
 CRISPY_TEMPLATE_PACK = "bootstrap5"
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"

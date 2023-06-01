@@ -1,0 +1,12 @@
+[tool.ruff]
+line-length = 80
+ignore = ["E402","F811"]
+[tool.black]
+target-version = ["py38"]
+line-length = 80
+
+[tool.djlint]
+blank_line_after_tag = "load,extends"
+close_void_tags = true
+max_line_length = 80
+profile = "django"

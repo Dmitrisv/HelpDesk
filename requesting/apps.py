@@ -6,4 +6,4 @@ class RequestingConfig(AppConfig):
     verbose_name = "Обработчик заявок"
 
     def ready(self):
-        from . import signals
+        pass

@@ -1,6 +1,6 @@
 """https://docs.gunicorn.org/en/stable/settings.html"""
 from __future__ import annotations
-import multiprocessing
+
 # pylint: disable=invalid-name
 bind = "0.0.0.0:8000"
 workers = 1
