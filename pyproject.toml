@@ -1,6 +1,7 @@
 [tool.ruff]
 line-length = 80
 ignore = ["E402","F811"]
+exclude = ["migrations/", "main/settings.py"]
 [tool.black]
 target-version = ["py38"]
 line-length = 80

@@ -1,5 +1,4 @@
 let send = document.getElementsByClassName("send");
-
 let chat_id = document.querySelector("#requests_pk");
 
 const proto = window.location.protocol === "https:" ? "wss" : "ws";
@@ -9,10 +8,18 @@ var chatSocket = new WebSocket(
     '/ws/request/' + chatId + '/'
 );
 
+
+function convertLinksToHTML(text) {
+  var urlRegex = /(https?:\/\/[^\s]+)/g;
+  return text.replace(urlRegex, function(url) {
+    return '<a href="' + url + ' target="_blank"" >' + url + '</a>';
+  });
+}
+
 chatSocket.onmessage = (e) =>{
     let data = JSON.parse(e.data);
     if (data["type_event"]==="new_chat_message"){
-        let messageContent = data['content'];
+        let messageContent = convertLinksToHTML(data['content']);
         let messageImage_thumb = data['image'];
         let messageImage_src = data['image_src'];
         let username = data['username'];

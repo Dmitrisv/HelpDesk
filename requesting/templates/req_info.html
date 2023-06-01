@@ -1,11 +1,13 @@
 {% load static %}
+{% load linkify %}
 {% load crispy_forms_tags %}
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>HelpDesk | Заявка № {{ requests.id }}</title>
         <link rel="stylesheet"
               href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0-alpha1/css/bootstrap.min.css"
@@ -22,12 +24,12 @@
               integrity="sha512-0IJ01kDH6fR7Oo1QEcyF+PgSLpefYXuGICVfNNoOseW6+HmsoaHzSZ7BAnwuu6BoK+nSn9WOeh0kiNjPNtGpuw=="
               crossorigin="anonymous"
               referrerpolicy="no-referrer" />
-        <link rel="stylesheet" href="{% static 'css/custom-elements.css' %}">
+        <link rel="stylesheet" href="{% static 'css/custom-elements.css' %}" />
     </head>
     <body>
         {% if requests.active is False %}
             <div class="alert alert-warning text-center" role="alert">
-                <i class="bi bi-exclamation-triangle"></i> Заявка помечена как неактивная
+                <i class="bi bi-archive-fill"></i> Заявка помечена как неактивная
             </div>
         {% endif %}
         <div class="container">
@@ -36,7 +38,9 @@
                     <li class="breadcrumb-item">
                         <a href="{% if request.user.is_staff is True %} {% url 'requests' %} {% else %} {% url 'new' %} {% endif %}">Заявки</a>
                     </li>
-                    <li class="breadcrumb-item active" aria-current="page">Заявка № {{ requests.id }}</li>
+                    <li class="breadcrumb-item active" aria-current="page">
+                        Заявка № {{ requests.id }}
+                    </li>
                 </ol>
             </nav>
             <div class="chat-container">
@@ -46,12 +50,20 @@
                             <span class="badge fs-6 me-1 rounded-pill text-bg-custom-medium"><i class="bi bi-person-circle"></i> {{ requests.user.first_name }} {{ requests.user.last_name }}</span>
                             <span class="badge fs-6 me-1 rounded-pill text-bg-custom-medium"><i class="bi bi-buildings"></i> {{ requests.user.groups.first.name }}</span>
                             <span class="badge fs-6 me-1 rounded-pill text-bg-custom-medium"><i class="bi bi-geo-alt-fill"></i>{{ requests.location }} кабинет</span>
-                        </div>
+                            {% if request.user.is_staff %}
+                                {% if requests.user.phone %}
+                                    <span class="badge fs-6 me-1 rounded-pill text-bg-custom-medium"><i class="bi bi-geo-alt-fill"></i>{{ requests.user.phone }} </span>
+                                {% endif %}
+                                {% if requests.user.ip %}
+                                    <span class="badge fs-6 me-1 rounded-pill text-bg-custom-medium"><i class="bi bi-geo-alt-fill"></i>{{ requests.user.ip }} </span>
+                                {% endif %}
+                            </div>
+                        {% endif %}
                         <h5 class="card-title  mt-3">{{ requests.theme }}</h5>
                         <p class="card-text text-muted ">{{ requests.requesting_message }}</p>
                         {% if requests.image != "" %}
                             <div class="img-fluid">
-                                <img src="{{ requests.image_thumbnail.url }}" id="image" class="rounded border border-primary" alt="" name = {{ requests.image.url }}>
+                                <img src="{{ requests.image_thumbnail.url }}" id="image" class="rounded border border-primary" alt="" name = {{ requests.image.url }} />
                             </div>
                         {% endif %}
                         <div class="row mt-3">
@@ -99,20 +111,24 @@
                 </div>
                 {% for chat_message in requests.messages.all %}
                     <div class="card-body">
-                        <h5 class="card-title  mt-3">{{ chat_message.user.first_name }} {{ chat_message.user.last_name }}</h5>
-                        <p class="card-text text-muted ">{{ chat_message.message }}</p>
+                        <h5 class="card-title  mt-3">
+                            {{ chat_message.user.first_name }} {{ chat_message.user.last_name }}
+                        </h5>
+                        <p class="card-text text-muted ">{{ chat_message.message|linkify|safe }}</p>
                         {% if chat_message.image != "" %}
                             <div class="img-fluid">
-                                <img src="{{ chat_message.image_thumbnail.url }}" id="image" class="rounded border border-primary" alt="" name = {{ chat_message.image.url }}>
+                                <img src="{{ chat_message.image_thumbnail.url }}" id="image" class="rounded border border-primary" alt="" name = {{ chat_message.image.url }} />
                             </div>
                         {% endif %}
                     </div>
                 {% endfor %}
             </div>
-            {{ form|crispy }}
-            <div class="text-end">
-                <button class="btn btn-primary send" onclick="sendMessage()">Отправить</button>
-            </div>
+            {% if requests.active %}
+                {{ form|crispy }}
+                <div class="text-end">
+                    <button class="btn btn-primary send" onclick="sendMessage()">Отправить</button>
+                </div>
+            {% endif %}
         </div>
     </div>
 </div>

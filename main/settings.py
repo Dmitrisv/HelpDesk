@@ -1,11 +1,12 @@
 from pathlib import Path
 import environ
+import os
 
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 env = environ.Env()
 env.smart_cast = False
 
-DEBUG = False
+DEBUG = True
 SECRET_KEY = (
     "django-insecure-n=e%k)a(l_=vqwxdyx5f#oc87addn7r-$q)!8amx2eswkrgx18"
 )
@@ -146,7 +147,7 @@ CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 
 SESSION_COOKIE_HTTPONLY = True
 CSRF_COOKIE_HTTPONLY = True
-SECURE_CONTENT_TYPE_NOSNIFF = False
+SECURE_CONTENT_TYPE_NOSNIFF = True
 X_FRAME_OPTIONS = "DENY"
 
 LOGGING = {

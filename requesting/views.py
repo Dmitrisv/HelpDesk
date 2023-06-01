@@ -64,7 +64,6 @@ def create_plot(user):
 
 @login_required
 def new_request(request):
-    data = models.Form.objects.filter(user=request.user).order_by("-time")[:5]
     if request.method == "POST":
         form = AddrequestForm(request.POST, request.FILES)
         image_file = request.FILES.get("image")
@@ -77,7 +76,13 @@ def new_request(request):
             form = AddrequestForm()
     else:
         form = AddrequestForm()
-    return render(request, "req.html", {"form": form, "data": data})
+    return render(
+        request,
+        "req.html",
+        {
+            "form": form,
+        },
+    )
 
 
 @staff_member_required
