@@ -6,7 +6,7 @@ BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 env = environ.Env()
 env.smart_cast = False
 
-DEBUG = True
+DEBUG = False
 SECRET_KEY = (
     "django-insecure-n=e%k)a(l_=vqwxdyx5f#oc87addn7r-$q)!8amx2eswkrgx18"
 )

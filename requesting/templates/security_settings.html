@@ -1,5 +1,10 @@
-{% extends 'profile/base_profile.html' %}
+{% extends "profile/base_profile.html" %}
+
 {% load crispy_forms_tags %}
+
+{% block title %}
+    Настройки безопасности
+{% endblock title %}
 {% block content %}
     <a class="icon-link icon-link-hover"  href="{% url 'profile' %}">
         <i class="bi bi-arrow-left"></i>

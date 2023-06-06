@@ -1,11 +1,16 @@
 {% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>HelpDesk | Профиль</title>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>HelpDesk |
+            {% block title %}
+                Профиль
+            {% endblock title %}
+        </title>
         <link rel="stylesheet"
               href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0-alpha1/css/bootstrap.min.css"
               integrity="sha512-72OVeAaPeV8n3BdZj7hOkaPSEk/uwpDkaGyP4W2jSzAC8tfiO4LMEDWoL3uFp5mcZu+8Eehb4GhZWFwvrss69Q=="
@@ -16,7 +21,7 @@
               integrity="sha512-YFENbnqHbCRmJt5d+9lHimyEMt8LKSNTMLSaHjvsclnZGICeY/0KYEeiHwD1Ux4Tcao0h60tdcMv+0GljvWyHg=="
               crossorigin="anonymous"
               referrerpolicy="no-referrer" />
-        <link rel="stylesheet" href="{% static 'css/custom-elements.css' %}">
+        <link rel="stylesheet" href="{% static 'css/custom-elements.css' %}" />
     </head>
     <body>
         <div class="container">
@@ -27,7 +32,7 @@
                         Email: <a href="mailto:{{ request.user.email }}">{{ request.user.email }}</a>
                     </div>
                     <div>Имя пользователя: {{ request.user.username }}</div>
-                    <hr class="mb-3">
+                    <hr class="mb-3" />
                     <div class="fs-3">Настройки</div>
                     <div class="fs-6 text-muted mt-3">Основные</div>
                     <a href="{% url 'profile_settings' %}">
@@ -49,9 +54,13 @@
                         </button>
                     </a>
                     <button type="button"
-                            class="btn btn-sm btn-outline-primary text-start w-100 py-2">История</button>
+                            class="btn btn-sm btn-outline-primary text-start w-100 py-2">
+                        История
+                    </button>
                     <button type="button"
-                            class="btn btn-sm btn-outline-primary text-start w-100 py-2">История</button>
+                            class="btn btn-sm btn-outline-primary text-start w-100 py-2">
+                        История
+                    </button>
                 </div>
                 <div class="col">
                     {% block content %}

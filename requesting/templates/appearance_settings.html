@@ -1,6 +1,11 @@
-{% extends 'profile/base_profile.html' %}
+{% extends "profile/base_profile.html" %}
+
+{% block title %}
+    Настройки внешнего вида
+{% endblock title %}
 {% block content %}
     {% load static %}
+
     <div class="container">
         <a class="icon-link icon-link-hover"  href="{% url 'profile' %}">
             <i class="bi bi-arrow-left"></i>
@@ -9,27 +14,27 @@
         <div class="fs-3 mb-3">Внешний вид</div>
         <div class="row row-cols-lg-3 row-cols-md-1 row-cols-sm-1 row-cols-1 row-cols-xs-1">
             <div class="col">
-                <div class="card mb-3" data-bs-theme-value="dark" style="cursor: pointer;">
+                <div class="card mb-3" data-bs-theme-value="dark">
                     <img src="{% static 'requesting/dark_preview.svg' %}"
-                         class="card-img-top img-fluid">
+                         class="card-img-top img-fluid" />
                     <div class="card-body">
                         <p class="card-text text-center">Темная тема</p>
                     </div>
                 </div>
             </div>
             <div class="col">
-                <div class="card mb-3" data-bs-theme-value="light" style="cursor: pointer">
+                <div class="card mb-3" data-bs-theme-value="light">
                     <img src="{% static 'requesting/light_preview.svg' %}"
-                         class="card-img-top img-fluid">
+                         class="card-img-top img-fluid" />
                     <div class="card-body">
                         <p class="card-text text-center">Светлая тема</p>
                     </div>
                 </div>
             </div>
             <div class="col">
-                <div class="card mb-3" data-bs-theme-value="auto"style="cursor: pointer;">
+                <div class="card mb-3" data-bs-theme-value="auto">
                     <img src="{% static 'requesting/auto.png' %}"
-                         class="card-img-top img-fluid">
+                         class="card-img-top img-fluid" />
                     <div class="card-body">
                         <p class="card-text text-center">Автоматически</p>
                     </div>

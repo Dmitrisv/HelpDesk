@@ -1,4 +1,5 @@
-{% extends 'profile/base_profile.html' %}
+{% extends "profile/base_profile.html" %}
+
 {% block content %}
     <div class="fs-3 mb-3 text-center">Мой профиль</div>
     {{ plot|safe }}
@@ -26,7 +27,9 @@
                             {% else %}
                                 <div class="col text-state">Просрочено</div>
                             {% endif %}
-                            <div class="col">{{ dat.implementer.first_name }} {{ dat.implementer.last_name }}</div>
+                            <div class="col">
+                                {{ dat.implementer.first_name }} {{ dat.implementer.last_name }}
+                            </div>
                             <div class="col text-end">{{ dat.deadline }}</div>
                         </div>
                     </div>
