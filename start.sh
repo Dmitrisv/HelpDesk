@@ -1,4 +1,4 @@
-python3 ./manage.py makemigrations requesting
+python3 ./manage.py makemigrations
 python3 ./manage.py migrate 
 mkdir staticfiles
 mkdir media

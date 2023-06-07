@@ -18,6 +18,7 @@ from django.views.generic import ListView, UpdateView
 from django.http import HttpResponseRedirect
 from django.contrib.auth import update_session_auth_hash
 from django.db.models import Q
+import django_otp
 
 
 from . import models
@@ -236,8 +237,10 @@ def change_password(request):
             return redirect("change_password")
     else:
         form = CustomChangePasswordForm(request.user)
-
-    return render(request, "security_settings.html", {"form": form})
+    devices = django_otp.user_has_device(request.user)
+    return render(
+        request, "security_settings.html", {"form": form, "device": devices}
+    )
 
 
 class PublicProfileView(UpdateView):

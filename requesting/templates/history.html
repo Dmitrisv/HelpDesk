@@ -1,10 +1,11 @@
 {% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Document</title>
         <link rel="stylesheet"
               href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0-alpha1/css/bootstrap.min.css"
@@ -20,7 +21,7 @@
     <body>
         <div class="container">
             <a class="icon-link icon-link-hover"  href="{% url 'profile' %}">
-                <i class="bi bi-arrow-left"></i>
+                <i class="fa-solid fa-arrow-left-long"></i>
                 Вернуться в профиль
             </a>
             {% for form in forms %}
@@ -34,7 +35,9 @@
                             {% else %}
                                 <div class="col text-state">Просрочено</div>
                             {% endif %}
-                            <div class="col">{{ form.implementer.first_name }} {{ form.implementer.last_name }}</div>
+                            <div class="col">
+                                {{ form.implementer.first_name }} {{ form.implementer.last_name }}
+                            </div>
                             <div class="col text-end">{{ form.deadline }}</div>
                         </div>
                     </div>

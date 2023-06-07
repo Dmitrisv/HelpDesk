@@ -1,0 +1,23 @@
+{% extends "two_factor/_base_focus.html" %}
+
+{% load i18n %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <h1>
+        {% block title %}Вы уверены?{% endblock %}
+    </h1>
+    <div>
+        {% blocktrans trimmed %}
+            You are about to disable two-factor authentication. This
+            weakens your account security, are you sure?
+        {% endblocktrans %}
+    </div>
+    <form method="post" class="py-3">
+        {% csrf_token %}
+        {{ form |crispy }}
+        <div class="text-end ">
+            <button class="btn btn-danger " type="submit">{% trans "Disable" %}</button>
+        </div>
+    </form>
+{% endblock %}

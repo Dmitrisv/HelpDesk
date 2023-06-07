@@ -10,3 +10,4 @@ plotly
 Pillow
 django-imagekit
 django-ckeditor
+django-two-factor-auth[phonenumbers]

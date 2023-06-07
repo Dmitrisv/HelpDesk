@@ -1,5 +1,6 @@
 {% load crispy_forms_tags %}
 {% load static %}
+
 <!DOCTYPE html>
 <html lang="ru">
     <head>
@@ -25,7 +26,9 @@
                     <h2>
                         <i class="bi bi-pc"></i>HelpDesk
                     </h2>
-                    <div class="fs-3 user_hello" id="{{ user.username }}">Добро пожаловать {{ user.first_name }}!</div>
+                    <div class="fs-3 user_hello" id="{{ user.username }}">
+                        Добро пожаловать {{ user.first_name }}!
+                    </div>
                 </div>
                 <div class="col">
                     <div class="text-end mt-3">

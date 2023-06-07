@@ -13,5 +13,6 @@ RUN groupadd -r django \
 
 RUN pip install -r requirements.txt
 COPY --chown=django:django . .
+RUN chown -R django:django /usr/local/lib/python3.11/site-packages/two_factor/migrations/
 
 USER django

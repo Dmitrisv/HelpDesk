@@ -24,3 +24,9 @@
     color: rgb(8,135,43)!important;
     background-color: rgb(227,252,231)
 }
+
+.panel-doted {
+    background-image: radial-gradient(circle, var(--bs-border-color) 1px, rgba(0,0,0,0) 1px);
+    background-size: 1rem 1rem;
+}
+

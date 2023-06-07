@@ -1,11 +1,12 @@
 {% load crispy_forms_tags %}
 {% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Поручения</title>
         <link rel="stylesheet"
               href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0-alpha1/css/bootstrap.min.css"
@@ -25,7 +26,7 @@
                     <div class="vstack gap-5 rounded-3 p-4 my-3 shadow border">
                         <div class="row">
                             <div class="col col-auto">
-                                <input type="checkbox" class="tasks_jobs" name="" id="{{ task.id }}">
+                                <input type="checkbox" class="tasks_jobs" name="" id="{{ task.id }}" />
                             </div>
                             <p class="col text-start fw-bold p-0 mb-0">{{ task.theme }}</p>
                         </div>
@@ -37,7 +38,7 @@
                     <form method="post">
                         {% csrf_token %}
                         {{ form|crispy }}
-                        <input class="btn btn-primary" type="submit" value="Поручить">
+                        <input class="btn btn-primary" type="submit" value="Поручить" />
                     </form>
                 </div>
             {% endif %}

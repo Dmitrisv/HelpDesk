@@ -21,7 +21,13 @@
               integrity="sha512-YFENbnqHbCRmJt5d+9lHimyEMt8LKSNTMLSaHjvsclnZGICeY/0KYEeiHwD1Ux4Tcao0h60tdcMv+0GljvWyHg=="
               crossorigin="anonymous"
               referrerpolicy="no-referrer" />
+        <link rel="stylesheet"
+              href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+              integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+              crossorigin="anonymous"
+              referrerpolicy="no-referrer" />
         <link rel="stylesheet" href="{% static 'css/custom-elements.css' %}" />
+        <script async src="{% static 'js/theme.js' %}"></script>
     </head>
     <body>
         <div class="container">
@@ -38,19 +44,19 @@
                     <a href="{% url 'profile_settings' %}">
                         <button type="button"
                                 class="btn btn-sm btn-outline-primary mb-2 text-start w-100 py-2">
-                            <i class="bi bi-person-circle me-1"></i>Публичный профиль
+                            <i class="fa-solid fa-user me-1"></i></i>Публичный профиль
                         </button>
                     </a>
                     <a href="{% url 'security_settings' %}">
                         <button type="button"
                                 class="btn btn-sm btn-outline-primary mb-2  text-start w-100 py-2">
-                            <i class="bi bi-lock me-1"></i>Безопасность
+                            <i class="fa-solid fa-lock me-1"></i>Безопасность
                         </button>
                     </a>
                     <a href="{% url 'appearance_settings' %}">
                         <button type="button"
                                 class="btn btn-sm btn-outline-primary mb-2 text-start w-100 py-2">
-                            <i class="bi bi-palette me-1"></i>Внешний вид
+                            <i class="fa-solid fa-palette me-1"></i>Внешний вид
                         </button>
                     </a>
                     <button type="button"
@@ -68,7 +74,6 @@
                 </div>
             </div>
         </div>
-        <script async src="{% static 'js/theme.js' %}"></script>
         {% block scripts %}
         {% endblock scripts %}
     </body>
