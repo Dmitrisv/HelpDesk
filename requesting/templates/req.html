@@ -18,25 +18,18 @@
               integrity="sha512-YFENbnqHbCRmJt5d+9lHimyEMt8LKSNTMLSaHjvsclnZGICeY/0KYEeiHwD1Ux4Tcao0h60tdcMv+0GljvWyHg=="
               crossorigin="anonymous"
               referrerpolicy="no-referrer" />
+              <link rel="stylesheet"
+              href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+              integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+              crossorigin="anonymous"
+              referrerpolicy="no-referrer" />
+        <link rel="stylesheet" href="{% static 'css/custom-elements.css' %}" />
     </head>
     <body>
+        {% include "navbar.html" %}
         <div class="container">
-            <div class="row">
-                <div class="col">
-                    <h2>
-                        <i class="bi bi-pc"></i>HelpDesk
-                    </h2>
                     <div class="fs-3 user_hello" id="{{ user.username }}">
                         Добро пожаловать {{ user.first_name }}!
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="text-end mt-3">
-                        Bug reports, support:
-                        <a href="mailto:sushchikovdv@kipmaster.ru">sushchikovdv@kipmaster.ru</a>
-                        <a href="/logout">Выйти</a>
-                    </div>
-                </div>
             </div>
             <div class="row">
                 <div class="col mt-3">

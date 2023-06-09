@@ -12,11 +12,21 @@
               integrity="sha512-72OVeAaPeV8n3BdZj7hOkaPSEk/uwpDkaGyP4W2jSzAC8tfiO4LMEDWoL3uFp5mcZu+8Eehb4GhZWFwvrss69Q=="
               crossorigin="anonymous"
               referrerpolicy="no-referrer" />
+              <link rel="stylesheet" href="{% static 'css/custom-elements.css' %}" />
+              <script defer
+              src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0-alpha1/js/bootstrap.bundle.min.js"
+              integrity="sha512-Sct/LCTfkoqr7upmX9VZKEzXuRk5YulFoDTunGapYJdlCwA+Rl4RhgcPCLf7awTNLmIVrszTPNUFu4MSesep5Q=="
+              crossorigin="anonymous"
+              referrerpolicy="no-referrer"></script>
     </head>
     <body>
+        {% include "navbar.html" %}
         <div class="container">
             <div class="fs-3 text-center">{{ article.title }}</div>
-            <div class="article">{{ article.content |safe }}</div>
+                <div class="border-none card">
+            {{ article.content |safe }}
+                </div>
+            </div>
         </div>
     </body>
     <script async src="{% static 'js/theme.js' %}"></script>

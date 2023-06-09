@@ -6,10 +6,6 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-    <a class="icon-link icon-link-hover"  href="{% url 'profile' %}">
-        <i class="fa-solid fa-arrow-left-long"></i>
-        Вернуться в профиль
-    </a>
     <div class="fs-3 mb-3">Публичный профиль</div>
     <form method="post">
         {% csrf_token %}

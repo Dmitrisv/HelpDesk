@@ -30,3 +30,10 @@
     background-size: 1rem 1rem;
 }
 
+.navbar{
+    backdrop-filter: blur(12px);
+}
+
+.border-none{
+    border: none;
+}

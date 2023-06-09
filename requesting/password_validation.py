@@ -10,7 +10,7 @@ HARD_P = re.compile(
 class PasswordValidator:
     def validate(self, password, user):
         if not HARD_P.match(password):
-            raise ValidationError("Пароль говно!!!")
+            raise ValidationError("Слабый пароль")
 
     def get_help_text(self):
         return ""

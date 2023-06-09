@@ -146,7 +146,7 @@ class HistoryListView(ListView):
 
     def get_queryset(self):
         queryset = super().get_queryset()
-        queryset = queryset.filter(user=self.request.user).order_by("-time")
+        queryset = queryset.filter(user=self.request.user).order_by("-time").values("time","theme","id","priority")
         return queryset
 
 
