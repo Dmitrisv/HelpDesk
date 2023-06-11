@@ -26,14 +26,13 @@
               referrerpolicy="no-referrer" />
         <link rel="stylesheet" href="{% static 'css/custom-elements.css' %}" />
         <script defer
-        src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0-alpha1/js/bootstrap.bundle.min.js"
-        integrity="sha512-Sct/LCTfkoqr7upmX9VZKEzXuRk5YulFoDTunGapYJdlCwA+Rl4RhgcPCLf7awTNLmIVrszTPNUFu4MSesep5Q=="
-        crossorigin="anonymous"
-        referrerpolicy="no-referrer"></script>
+                src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0-alpha1/js/bootstrap.bundle.min.js"
+                integrity="sha512-Sct/LCTfkoqr7upmX9VZKEzXuRk5YulFoDTunGapYJdlCwA+Rl4RhgcPCLf7awTNLmIVrszTPNUFu4MSesep5Q=="
+                crossorigin="anonymous"
+                referrerpolicy="no-referrer"></script>
     </head>
     <body>
         {% include "navbar.html" %}
-        
         {% if requests.active is False %}
             <div class="alert alert-warning text-center" role="alert">
                 <i class="bi bi-archive-fill"></i> Заявка помечена как неактивная
@@ -64,7 +63,6 @@
                                 {% if requests.user.ip %}
                                     <span class="badge fs-6 me-1 rounded-pill text-bg-custom-medium"><i class="bi bi-geo-alt-fill"></i>{{ requests.user.ip }} </span>
                                 {% endif %}
-                            
                             {% endif %}
                         </div>
                         <h5 class="card-title  mt-3">{{ requests.theme }}</h5>
