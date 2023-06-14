@@ -19,6 +19,7 @@ from django.http import HttpResponseRedirect
 from django.contrib.auth import update_session_auth_hash
 from django.db.models import Q
 import django_otp
+from django.urls import reverse
 
 
 from . import models
@@ -146,7 +147,11 @@ class HistoryListView(ListView):
 
     def get_queryset(self):
         queryset = super().get_queryset()
-        queryset = queryset.filter(user=self.request.user).order_by("-time").values("time","theme","id","priority")
+        queryset = (
+            queryset.filter(user=self.request.user)
+            .order_by("-time")
+            .values("time", "theme", "id", "priority")
+        )
         return queryset
 
 
@@ -190,7 +195,8 @@ def takereq(request, id):
     if req.implementer is None:
         req.implementer = request.user
     req.save()
-    return redirect("requests")
+    url = reverse("request_info", args=[id])
+    return redirect(url)
 
 
 @require_POST
@@ -219,7 +225,8 @@ def sub_implementor(request, id):
     req = models.Form.objects.get(pk=id)
     if req.active is True:
         req.soimplementor.add(request.user)
-    return redirect("requests")
+    url = reverse("request_info", args=[id])
+    return redirect(url)
 
 
 @login_required
